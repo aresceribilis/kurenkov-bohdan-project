@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Vismy.Post">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAEAgAgAAAAiAAAAAAAAAAAAEACAAAAAAAAAAA=</HashCode>
+      <FileName>Realizations\Post.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vismy.Report">
+    <Position X="3.25" Y="3.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIEAAAAAgAAAAiAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Realizations\Report.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vismy.User">
+    <Position X="8.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAEAAAAAAAgCEAAQAQABGAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Realizations\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vismy.Video">
+    <Position X="0.5" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Realizations\Video.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vismy.ViewedPost">
+    <Position X="6.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Realizations\ViewedPost.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Vismy.RestrictionsStatus">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAEEAAI=</HashCode>
+      <FileName>Realizations\Post.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Vismy.VerificationStatus">
+    <Position X="6.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Realizations\Report.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Vismy.UserStatus">
+    <Position X="9.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAEAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Realizations\User.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Vismy.LikeStatus">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Realizations\ViewedPost.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

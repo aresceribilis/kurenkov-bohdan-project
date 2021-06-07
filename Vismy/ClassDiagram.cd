@@ -1,66 +1,295 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
-  <Class Name="Vismy.Post">
-    <Position X="0.5" Y="0.5" Width="2" />
+  <Class Name="Vismy.DataAccessLayer.Implementations.PostRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQAAAEAgAgAAAAiAAAAAAAAAAAAEACAAAAAAAAAAA=</HashCode>
-      <FileName>Realizations\Post.cs</FileName>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAACEAAAAAAgAAAAAAAIA=</HashCode>
+      <FileName>DataAccessLayer\Implementations\PostRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Vismy.DataAccessLayer.Implementations.ReportPostRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAACEAAAAAAgAAAAAAAIA=</HashCode>
+      <FileName>DataAccessLayer\Implementations\ReportPostRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Vismy.DataAccessLayer.Implementations.ReportUserRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAACEAAAAAAgAAAAAAAIA=</HashCode>
+      <FileName>DataAccessLayer\Implementations\ReportUserRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Vismy.DataAccessLayer.Implementations.UserRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAACEAAAAAAgAAAAAAAIA=</HashCode>
+      <FileName>DataAccessLayer\Implementations\UserRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Vismy.Models.Implementations.Administrator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAACAAAAAgiAAAQAQABAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Implementations\Administrator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Vismy.Models.Implementations.Moderator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAACAAAAAgiAAAQAQABAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Implementations\Moderator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Vismy.Models.Implementations.ReportPost" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACIAAAAAAgAAAAiAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Implementations\ReportPost.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Vismy.Models.Implementations.ReportUser" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACIAAAAAAgAAAAiAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Implementations\ReportUser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Vismy.Models.Implementations.User" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAACAAAAAgiAAAQAQABAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Implementations\User.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Vismy.Models.Post" Collapsed="true">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAASAAAEAgAgAAAAiAAAAAAAAAAEAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Post.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Vismy.Report">
-    <Position X="3.25" Y="3.75" Width="3.5" />
+  <Class Name="Vismy.Models.Video" Collapsed="true">
+    <Position X="2.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIEAAAAAgAAAAiAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Realizations\Report.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAEIAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Video.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Vismy.User">
-    <Position X="8.75" Y="0.5" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAABAAAEAAAAAAAgCEAAQAQABGAAAAACAAAAAAAAAAA=</HashCode>
-      <FileName>Realizations\User.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Vismy.Video">
-    <Position X="0.5" Y="4" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Realizations\Video.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Vismy.ViewedPost">
-    <Position X="6.25" Y="0.5" Width="1.75" />
+  <Class Name="Vismy.Models.UserPost" Collapsed="true">
+    <Position X="4.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Realizations\ViewedPost.cs</FileName>
+      <FileName>Models\ViewedPost.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="Vismy.RestrictionsStatus">
-    <Position X="2.5" Y="0.5" Width="1.5" />
+  <Class Name="Vismy.Services.Implementations.AdministratorService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAEEAAI=</HashCode>
-      <FileName>Realizations\Post.cs</FileName>
+      <HashCode>gAoQAAAAAARAAIAAAAFAAEEAAAAAAAAAAAAAAgAIAAA=</HashCode>
+      <FileName>Services\Implementations\AdministratorService.cs</FileName>
     </TypeIdentifier>
-  </Enum>
-  <Enum Name="Vismy.VerificationStatus">
-    <Position X="6.75" Y="5" Width="1.5" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Vismy.Services.Implementations.ModeratorService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAACAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Realizations\Report.cs</FileName>
+      <HashCode>gAIQAAAAAARAAIAAAAFAAEECAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Services\Implementations\ModeratorService.cs</FileName>
     </TypeIdentifier>
-  </Enum>
-  <Enum Name="Vismy.UserStatus">
-    <Position X="9.5" Y="4.25" Width="1.5" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Vismy.DatabaseMock" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAEAEAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Realizations\User.cs</FileName>
+      <HashCode>AAAAACAAAABAAAAABAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>DatabaseMock.cs</FileName>
     </TypeIdentifier>
-  </Enum>
-  <Enum Name="Vismy.LikeStatus">
-    <Position X="4.75" Y="0.5" Width="1.5" />
+  </Class>
+  <Class Name="Vismy.Program" Collapsed="true">
+    <Position X="2.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vismy.Services.Implementations.UserService" Collapsed="true">
+    <Position X="20.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAQAAAAAAQAAIAAAAFAAEEAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Services\Implementations\UserService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Vismy.DataAccessLayer.Interfaces.IPostRepository" Collapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <InheritanceLine Type="Vismy.DataAccessLayer.Interfaces.IRepository&lt;TEntity&gt;" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="1.062" />
+        <Point X="6.25" Y="1.375" />
+        <Point X="7.25" Y="1.375" />
+        <Point X="7.25" Y="1.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataAccessLayer\Interfaces\IPostRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.DataAccessLayer.Interfaces.IReportPostRepository" Collapsed="true">
+    <Position X="2.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataAccessLayer\Interfaces\IReportPostRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.DataAccessLayer.Interfaces.IReportRepository&lt;T&gt;" Collapsed="true">
+    <Position X="1.5" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="Vismy.DataAccessLayer.Interfaces.IRepository&lt;TEntity&gt;" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.5" Y="0.812" />
+        <Point X="3" Y="0.812" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataAccessLayer\Interfaces\IReportRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.DataAccessLayer.Interfaces.IReportUserRepository" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataAccessLayer\Interfaces\IReportUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.DataAccessLayer.Interfaces.IRepository&lt;TEntity&gt;" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAACEAAAAAAgAAAAAAAIA=</HashCode>
+      <FileName>DataAccessLayer\Interfaces\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.DataAccessLayer.Interfaces.IUserRepository" Collapsed="true">
+    <Position X="4.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataAccessLayer\Interfaces\IUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.Models.Interfaces.IAdministrator" Collapsed="true">
+    <Position X="12.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Interfaces\IAdministrator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.Models.Interfaces.IModerator" Collapsed="true">
+    <Position X="16.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Interfaces\IModerator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.Models.Interfaces.IReport&lt;T&gt;" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACIAAAAAAgAAAAiAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Interfaces\IReport.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.Models.Interfaces.IReportPost" Collapsed="true">
+    <Position X="8.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Interfaces\IReportPost.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.Models.Interfaces.IReportUser" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Interfaces\IReportUser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.Models.Interfaces.IPerson" Collapsed="true">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAACAAAAAkiAAAQAQABAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Interfaces\IPerson.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.Services.Interfaces.IAdministratorService" Collapsed="true">
+    <Position X="18.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAoAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Services\Interfaces\IAdministratorService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.Services.Interfaces.IModeratorService" Collapsed="true">
+    <Position X="22.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAABAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IModeratorService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.Services.Interfaces.IPersonService" Collapsed="true">
+    <Position X="20.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAQAAAAAAQAAIAAAAFAAEEAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IPersonService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.Services.Interfaces.IUserService" Collapsed="true">
+    <Position X="20.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IUserService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Vismy.Models.Interfaces.IUser" Collapsed="true">
+    <Position X="14.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Interfaces\IUser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Vismy.Models.Enums.LikeStatus" Collapsed="true">
+    <Position X="0.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAgAAA=</HashCode>
-      <FileName>Realizations\ViewedPost.cs</FileName>
+      <FileName>Models\Enums\LikeStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Vismy.Models.Enums.RestrictionsStatus" Collapsed="true">
+    <Position X="2.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAEEAAI=</HashCode>
+      <FileName>Models\Enums\RestrictionsStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Vismy.Models.Enums.PersonRole" Collapsed="true">
+    <Position X="4.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAEAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Enums\PersonRole.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Vismy.Models.Enums.VerificationStatus" Collapsed="true">
+    <Position X="6.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Enums\VerificationStatus.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Vismy.Models.Enums;
 using Vismy.Models.Interfaces;
 
 namespace Vismy.Models.Implementations
 {
+    [Serializable]
     public class User : IUser
     {
         public int Id { get; init; }
@@ -17,15 +17,20 @@ namespace Vismy.Models.Implementations
         public string Email { get; set; }
         public string PhotoUrl { get; set; }
         //public PersonRole Role { get; set; }
-        public IEnumerable<IPerson> Followers { get; init; }
-        public IEnumerable<IPerson> Following { get; init; }
+        [NonSerialized] 
+        public readonly IEnumerable<IPerson> Followers = new List<IPerson>();
+        [NonSerialized] 
+        public readonly IEnumerable<IPerson> Following = new List<IPerson>();
 
         public User(string nickname, string password)
         {
             Nickname = nickname;
             Password = password;
-            Followers = new List<IPerson>();
-            Following = new List<IPerson>();
+        }
+
+        public override string ToString()
+        {
+            return $"Id: {Id}, Nickname: {Nickname}, Role: {GetType().Name}";
         }
     }
 }

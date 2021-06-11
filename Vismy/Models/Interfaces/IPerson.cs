@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Vismy.Models.Enums;
 
 namespace Vismy.Models.Interfaces
 {
@@ -16,12 +14,7 @@ namespace Vismy.Models.Interfaces
         public string Email { get; set; }
         public string PhotoUrl { get; set; }
         //public PersonRole Role { get; set; }
-        public IEnumerable<IPerson> Followers { get; init; }
-        public IEnumerable<IPerson> Following { get; init; }
-
-        public string ToString()
-        {
-            return $"Id: {Id}, Nickname: {Nickname}, Role: {GetType().Name}";
-        }
+        //public IEnumerable<IPerson> Followers { get; init; }
+        //public IEnumerable<IPerson> Following { get; init; }
     }
 }

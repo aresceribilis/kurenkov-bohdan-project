@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Vismy.Models.Enums;
 using Vismy.Models.Interfaces;
 
 namespace Vismy.Models.Implementations
@@ -15,7 +16,7 @@ namespace Vismy.Models.Implementations
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string PhotoUrl { get; set; }
-        //public PersonRole Role { get; set; }
+        public PersonRole Role { get; set; }
         public IEnumerable<IPerson> Followers { get; init; }
         public IEnumerable<IPerson> Following { get; init; }
         public Administrator(string nickname, string password)

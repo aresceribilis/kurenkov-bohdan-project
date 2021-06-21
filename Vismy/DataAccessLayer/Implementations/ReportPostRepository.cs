@@ -7,6 +7,10 @@ namespace Vismy.DataAccessLayer.Implementations
 {
     public class ReportPostRepository : IReportPostRepository
     {
+        public string ConnectionString { get; set; }
+
+        public ReportPostRepository(string connectionString) => ConnectionString = connectionString;
+
         public IEnumerable<IReport<Post>> GetAll()
         {
             return DatabaseMock.PostsReports;

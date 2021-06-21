@@ -4,6 +4,7 @@ namespace Vismy.DataAccessLayer.Interfaces
 {
     public interface IRepository<TEntity>
     {
+        string ConnectionString { get; set; }
         IEnumerable<TEntity> GetAll();
         TEntity GetById(int id);
         void Update(TEntity entity);

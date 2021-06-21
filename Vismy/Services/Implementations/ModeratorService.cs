@@ -10,10 +10,18 @@ namespace Vismy.Services.Implementations
 {
     public class ModeratorService : IModeratorService
     {
-        public IPostRepository PostRepository { get; set; } = new PostRepository();
-        public IReportPostRepository ReportPostRepository { get; set; } = new ReportPostRepository();
-        public IReportUserRepository ReportUserRepository { get; set; } = new ReportUserRepository();
-        public IUserRepository UserRepository { get; set; } = new UserRepository();
+        public IPostRepository PostRepository { get; set; }
+        public IReportPostRepository ReportPostRepository { get; set; }
+        public IReportUserRepository ReportUserRepository { get; set; }
+        public IUserRepository UserRepository { get; set; }
+
+        public ModeratorService(string connectionString)
+        {
+            PostRepository = new PostRepository(connectionString);
+            ReportPostRepository = new ReportPostRepository(connectionString);
+            ReportUserRepository = new ReportUserRepository(connectionString);
+            UserRepository = new UserRepository(connectionString);
+        }
 
         public void AddPost(Post post)
         {

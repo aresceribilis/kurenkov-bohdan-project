@@ -2,8 +2,8 @@ namespace Vismy.Models.Enums
 {
     public enum PersonRole
     {
-        User = 0,
-        Moderator = 1,
-        Administrator = 2,
+        User = 1,
+        Moderator = 2,
+        Administrator = 3,
     }
 }

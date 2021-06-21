@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Vismy.Models.Enums;
 using Vismy.Models.Interfaces;
 
 namespace Vismy.Models.Implementations

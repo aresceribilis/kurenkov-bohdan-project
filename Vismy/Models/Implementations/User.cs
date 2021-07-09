@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Vismy.Models.Enums;
 using Vismy.Models.Interfaces;
 
 namespace Vismy.Models.Implementations
@@ -16,21 +17,15 @@ namespace Vismy.Models.Implementations
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string PhotoUrl { get; set; }
-        //public PersonRole Role { get; set; }
+        public PersonRole Role { get; set; }
         [NonSerialized] 
         public readonly IEnumerable<IPerson> Followers = new List<IPerson>();
         [NonSerialized] 
         public readonly IEnumerable<IPerson> Following = new List<IPerson>();
 
-        public User(string nickname, string password)
-        {
-            Nickname = nickname;
-            Password = password;
-        }
-
         public override string ToString()
         {
-            return $"Id: {Id}, Nickname: {Nickname}, Role: {GetType().Name}";
+            return $"Id: {Id,3}, Nickname: {Nickname,12}, Role: {GetType().Name,10}";
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Vismy
                 connection.Open();
                 Console.WriteLine("Successfull");
 
-                userRepository.DeleteById(35);
+                userRepository.DeleteById(39);
 
                 userRepository.Add(ronald);
 

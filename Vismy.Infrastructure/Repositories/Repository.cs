@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Vismy.Core.Interfaces;
 using Vismy.Core.Models.Interfaces;
 using Vismy.Infrastructure.Context;
 
@@ -20,30 +21,30 @@ namespace Vismy.Infrastructure.Repositories
             _dbSet = _context.Set<T>();
         }
 
-        public async Task Add(T obj)
+        public async Task AddAsync(T obj)
         {
             await _dbSet.AddAsync(obj);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update(T obj)
+        public async Task UpdateAsync(T obj)
         {
             _dbSet.Update(obj);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(T obj)
+        public async Task DeleteAsync(T obj)
         {
             _dbSet.Remove(obj);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<T> GetById(int id, string includeProperties)
+        public async Task<T> GetByIdAsync(int id, string includeProperties)
         {
-            return (await Get(i => i.Id == id, includeProperties)).FirstOrDefault();
+            return (await GetAsync(i => i.Id == id, includeProperties)).FirstOrDefault();
         }
 
-        public async Task<IEnumerable<T>> Get(Expression<Func<T, bool>> filter = null, string includeProperties = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, int skip = 0, int take = 0)
+        public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter = null, string includeProperties = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, int skip = 0, int take = 0)
         {
             IQueryable<T> query = _dbSet;
 

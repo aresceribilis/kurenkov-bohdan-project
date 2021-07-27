@@ -11,8 +11,6 @@
   <ItemGroup>
     <Folder Include="DTOs\" />
     <Folder Include="Maps\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -4,15 +4,15 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Vismy.Core.Models.Interfaces
+namespace Vismy.Core.Interfaces
 {
     public interface IRepository<T>
     {
-        public Task Add(T obj);
-        public Task Update(T obj);
-        public Task Delete(T obj);
-        public Task<T> GetById(int id, string includeProperties);
-        public Task<IEnumerable<T>> Get(
+        public Task AddAsync(T obj);
+        public Task UpdateAsync(T obj);
+        public Task DeleteAsync(T obj);
+        public Task<T> GetByIdAsync(int id, string includeProperties);
+        public Task<IEnumerable<T>> GetAsync(
             Expression<Func<T, bool>> filter = null, 
             string includeProperties = null, 
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, 

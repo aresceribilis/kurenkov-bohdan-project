@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using Vismy.Core.Models.Interfaces;
 using Vismy.Core.Models.Joins;
 using Vismy.Core.Models.Statuses;
 
@@ -8,7 +9,7 @@ using Vismy.Core.Models.Statuses;
 
 namespace Vismy.Core.Models.Implementations
 {
-    public partial class AspNetUser : IdentityUser<int>
+    public partial class AspNetUser : IdentityUser<int>, IEntity
     {
         public AspNetUser()
         {

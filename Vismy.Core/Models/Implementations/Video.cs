@@ -1,10 +1,11 @@
 ﻿using System;
+using Vismy.Core.Models.Interfaces;
 
 #nullable disable
 
 namespace Vismy.Core.Models.Implementations
 {
-    public partial class Video
+    public partial class Video : IEntity
     {
         public int Id { get; set; }
         public string Title { get; set; }

@@ -1,8 +1,10 @@
-﻿#nullable disable
+﻿using Vismy.Core.Models.Interfaces;
+
+#nullable disable
 
 namespace Vismy.Core.Models.Implementations
 {
-    public partial class AspNetUserClaim
+    public partial class AspNetUserClaim : IEntity
     {
         public int Id { get; set; }
         public int UserId { get; set; }

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using Vismy.Core.Models.Implementations;
+using Vismy.Core.Models.Interfaces;
 using Vismy.Core.Models.Joins;
 
 #nullable disable
 
 namespace Vismy.Core.Models.Statuses
 {
-    public partial class AspNetRole
+    public partial class AspNetRole : IEntity
     {
         public AspNetRole()
         {

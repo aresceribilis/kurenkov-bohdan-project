@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using Vismy.Core.Models.Interfaces;
 using Vismy.Core.Models.Joins;
 
 #nullable disable
 
 namespace Vismy.Core.Models.Implementations
 {
-    public partial class Tag
+    public partial class Tag : IEntity
     {
         public Tag()
         {

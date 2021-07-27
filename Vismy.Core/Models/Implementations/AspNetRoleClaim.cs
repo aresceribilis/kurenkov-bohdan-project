@@ -1,10 +1,11 @@
-﻿using Vismy.Core.Models.Statuses;
+﻿using Vismy.Core.Models.Interfaces;
+using Vismy.Core.Models.Statuses;
 
 #nullable disable
 
 namespace Vismy.Core.Models.Implementations
 {
-    public partial class AspNetRoleClaim
+    public partial class AspNetRoleClaim : IEntity
     {
         public int Id { get; set; }
         public int RoleId { get; set; }

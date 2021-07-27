@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Vismy.Core.Models.Interfaces;
 using Vismy.Core.Models.Joins;
 using Vismy.Core.Models.Statuses;
 
@@ -6,7 +7,7 @@ using Vismy.Core.Models.Statuses;
 
 namespace Vismy.Core.Models.Implementations
 {
-    public partial class Report
+    public partial class Report : IEntity
     {
         public Report()
         {

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Vismy.Core.Models.Implementations;
+using Vismy.Core.Models.Interfaces;
 
 #nullable disable
 
 namespace Vismy.Core.Models.Statuses
 {
-    public partial class UserStatus
+    public partial class UserStatus : IEntity
     {
         public UserStatus()
         {

@@ -10,11 +10,12 @@ namespace Vismy.Application.Interfaces
         public IRepository<Report> ReportRepository { get; set; }
         public IRepository<AspNetUser> UserRepository { get; set; }
 
-        public Task AddPostAsync(AspNetUser user, Post post);
+        public Task AddPostAsync(int userId, Post post);
         public Task EditPostAsync(Post post);
-        public Task DeletePostAsync(Post post);
-        public Task FollowUserAsync(AspNetUser user, AspNetUser follower);
-        public Task LikePostAsync(AspNetUser user, Post post);
-        public Task MakeReportAsync(AspNetUser author, Report report);
+        public Task DeletePostAsync(int postId);
+        public Task FollowUserAsync(int userId, int followingId);
+        public Task ViewPostAsync(int userId, int postId);
+        public Task LikePostAsync(int userId, int postId);
+        public Task MakeReportAsync(int userId, Report report);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Vismy.Application.DTOs;
 using Vismy.Application.Interfaces;
 using Vismy.Core.Interfaces;
 using Vismy.Core.Models.Implementations;
@@ -26,6 +27,7 @@ namespace Vismy.Application.Services
         public IRepository<UserUser> UserUserRepository { get; set; }
         public IRepository<UserPost> UserPostRepository { get; set; }
         public IRepository<UserPostStatus> UserPostStatusRepository { get; set; }
+        public IRepository<UserReportAuthor> UserReportAuthorRepository { get; set; }
 
         public UserService(
             IMapper mapper,
@@ -39,27 +41,19 @@ namespace Vismy.Application.Services
             UserRepository = userRepository;
         }
 
-        public async Task AddPostAsync(int userId, Post post)
-        {
-            //await PostRepository.AddAsync(post);
-            throw new System.NotImplementedException();
-        }
+        public async Task AddPostAsync(PostInfoDTO postDto) => await PostRepository.AddAsync(Mapper.Map<Post>(postDto));
 
-        public async Task EditPostAsync(Post post)
-        {
-            //await PostRepository.UpdateAsync(post);
-            throw new System.NotImplementedException();
-        }
+        public async Task EditPostAsync(PostInfoDTO postDto) => await PostRepository.UpdateAsync(Mapper.Map<Post>(postDto));
 
-        public async Task DeletePostAsync(int postId)
-        {
-            await PostRepository.DeleteAsync(new Post() {Id = postId});
-        }
+        public async Task DeletePostAsync(int postId) => await PostRepository.DeleteAsync(new Post() {Id = postId});
 
         public async Task FollowUserAsync(int userId, int followingId)
         {
             var userUser =
-                (await UserUserRepository.GetAsync(uu => (uu.UserId == userId) && (uu.FollowerId == followingId))).FirstOrDefault();
+                (await UserUserRepository.GetAsync(uu => 
+                    (uu.UserId == userId) && 
+                    (uu.FollowerId == followingId)))
+                .FirstOrDefault();
 
             if (userUser != null)
                 await UserUserRepository.DeleteAsync(userUser);
@@ -68,7 +62,9 @@ namespace Vismy.Application.Services
                 var user = await UserRepository.GetByIdAsync(userId, "UserUserUsers");
                 var following = await UserRepository.GetByIdAsync(userId, "UserUserFollowers");
 
-                userUser = new UserUser() { User = user, Follower = following, UserId = user.Id, FollowerId = followingId };
+                userUser = new UserUser() { 
+                    User = user, Follower = following,
+                    UserId = user.Id, FollowerId = followingId };
 
                 await UserUserRepository.AddAsync(userUser);
 
@@ -83,14 +79,20 @@ namespace Vismy.Application.Services
         public async Task ViewPostAsync(int userId, int postId)
         {
             var userPost =
-                (await UserPostRepository.GetAsync(uu => (uu.UserId == userId) && (uu.PostId == postId))).FirstOrDefault();
+                (await UserPostRepository.GetAsync(uu => 
+                    (uu.UserId == userId) && 
+                    (uu.PostId == postId)))
+                .FirstOrDefault();
 
             if (userPost == null)
             {
                 var user = await UserRepository.GetByIdAsync(userId, "UserPosts");
                 var post = await PostRepository.GetByIdAsync(postId, "UserPosts");
                 var userPostStatus =
-                    (await UserPostStatusRepository.GetAsync(i => i.Name == "Viewed")).FirstOrDefault();
+                    (await UserPostStatusRepository
+                        .GetAsync(i => 
+                            i.Name == "Viewed"))
+                    .FirstOrDefault();
 
                 userPost = new UserPost() { 
                     User = user, UserId = user.Id,
@@ -105,7 +107,11 @@ namespace Vismy.Application.Services
         public async Task LikePostAsync(int userId, int postId)
         {
             var userPost = 
-                (await UserPostRepository.GetAsync(uu => (uu.UserId == userId) && (uu.PostId == postId))).FirstOrDefault();
+                (await UserPostRepository.GetAsync(uu => 
+                    (uu.UserId == userId) && 
+                    (uu.PostId == postId), 
+                    "UserPostStatus"))
+                .FirstOrDefault();
             
             if (userPost.UserPostStatus.Name == "Liked")
             {
@@ -121,9 +127,51 @@ namespace Vismy.Application.Services
             await UserPostRepository.UpdateAsync(userPost);
         }
 
-        public async Task MakeReportAsync(int userId, Report report)
+        public async Task MakeReportAsync(int authorId, ReportInfoDTO reportDto)
         {
-            throw new System.NotImplementedException();
+            var report = (await ReportRepository
+                    .GetAsync(r => 
+                        (r.PostId == reportDto.Post.Id) && 
+                        (r.ReportStatus.Name == reportDto.TypeName), 
+                        "UserReportAuthors"))
+                .FirstOrDefault();
+            var author = await UserRepository.GetByIdAsync(authorId, "");
+
+            if (report == null)
+            {
+                report = Mapper.Map<Report>(reportDto);
+
+                var userReportAuthor = new UserReportAuthor()
+                {
+                    Report = report,
+                    ReportId = report.Id,
+                    User = author,
+                    UserId = authorId
+                };
+                await UserReportAuthorRepository.AddAsync(userReportAuthor);
+
+                report.UserReportAuthors.Add(userReportAuthor);
+                await ReportRepository.UpdateAsync(report);
+            }
+            else if(report.UserReportAuthors
+                .Contains((await UserReportAuthorRepository
+                    .GetAsync(ura => 
+                        (ura.UserId == authorId) &&
+                        (ura.ReportId == report.Id)))
+                    .FirstOrDefault()))
+            {
+                var userReportAuthor = new UserReportAuthor()
+                {
+                    Report = report,
+                    ReportId = report.Id,
+                    User = author,
+                    UserId = authorId
+                };
+                await UserReportAuthorRepository.AddAsync(userReportAuthor);
+
+                report.UserReportAuthors.Add(userReportAuthor);
+                await ReportRepository.UpdateAsync(report);
+            }
         }
     }
 }

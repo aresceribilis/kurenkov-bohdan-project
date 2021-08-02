@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Vismy.Core.Models.Implementations;
@@ -9,7 +10,7 @@ using Vismy.Core.Models.Statuses;
 
 namespace Vismy.Infrastructure.Context
 {
-    public partial class VismyContext : IdentityDbContext<AspNetUser, IdentityRole<int>, int>
+    public partial class VismyContext : IdentityDbContext<AspNetUser, IdentityRole, string>
     {
         public VismyContext()
         {
@@ -20,13 +21,7 @@ namespace Vismy.Infrastructure.Context
         {
         }
 
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
-        public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<PostStatus> PostStatuses { get; set; }
         public virtual DbSet<PostTag> PostTags { get; set; }
@@ -38,7 +33,6 @@ namespace Vismy.Infrastructure.Context
         public virtual DbSet<UserReportAuthor> UserReportAuthors { get; set; }
         public virtual DbSet<UserReportModerator> UserReportModerators { get; set; }
         public virtual DbSet<UserReportModeratorStatus> UserReportModeratorStatuses { get; set; }
-        public virtual DbSet<UserStatus> UserStatuses { get; set; }
         public virtual DbSet<UserUser> UserUsers { get; set; }
         public virtual DbSet<Video> Videos { get; set; }
 
@@ -47,122 +41,46 @@ namespace Vismy.Infrastructure.Context
             if (!optionsBuilder.IsConfigured)
             {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=Vismy;Trusted_Connection=True;MultipleActiveResultSets=true");
+                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=Vismy_tmp;Trusted_Connection=True;MultipleActiveResultSets=true");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.HasAnnotation("Relational:Collation", "Cyrillic_General_CI_AS");
 
-            modelBuilder.Entity<AspNetRole>(entity =>
-            {
-                entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
-                    .IsUnique()
-                    .HasFilter("([NormalizedName] IS NOT NULL)");
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole() {Name = "User", NormalizedName = "USER"},
+                new IdentityRole() {Name = "Moderator", NormalizedName = "MODERATOR"},
+                new IdentityRole() {Name = "Administrator", NormalizedName = "ADMINISTRATOR"});
 
-                entity.Property(e => e.Name).HasMaxLength(256);
+            modelBuilder.Entity<ReportStatus>().HasData(
+                new ReportStatus() {Id = 1, Name = "Violence", Description = "Violence"},
+                new ReportStatus() {Id = 2, Name = "Sexual content", Description = "Sexual content"},
+                new ReportStatus() {Id = 3, Name = "Bullying", Description = "Bullying"},
+                new ReportStatus() {Id = 4, Name = "Drugs", Description = "Drugs"});
 
-                entity.Property(e => e.NormalizedName).HasMaxLength(256);
-            });
+            modelBuilder.Entity<PostStatus>().HasData(
+                new PostStatus() { Id = 1, Name = "None", Description = "None" },
+                new PostStatus() { Id = 2, Name = "Hidden", Description = "Hidden" },
+                new PostStatus() { Id = 3, Name = "Frozen", Description = "Frozen" },
+                new PostStatus() { Id = 4, Name = "Removed", Description = "Removed" });
 
-            modelBuilder.Entity<AspNetRoleClaim>(entity =>
-            {
-                entity.HasIndex(e => e.RoleId, "IX_AspNetRoleClaims_RoleId");
+            modelBuilder.Entity<UserPostStatus>().HasData(
+                new UserPostStatus() { Id = 1, Name = "Viewed", Description = "View shows you viewed the post before." },
+                new UserPostStatus() { Id = 2, Name = "Liked", Description = "Like shows you appreciate the post." });
 
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.AspNetRoleClaims)
-                    .HasForeignKey(d => d.RoleId);
-            });
+            modelBuilder.Entity<UserReportModeratorStatus>().HasData(
+                new UserReportModeratorStatus() { Id = 1, Name = "Approved", Description = "Approved" },
+                new PostStatus() { Id = 2, Name = "Disapproved", Description = "Disapproved" });
 
             modelBuilder.Entity<AspNetUser>(entity =>
             {
-                entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
-
-                entity.HasIndex(e => e.UserStatusId, "IX_AspNetUsers_User_StatusId");
-
-                entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
-                    .IsUnique()
-                    .HasFilter("([NormalizedUserName] IS NOT NULL)");
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasMaxLength(30);
-
                 entity.Property(e => e.Name).HasMaxLength(30);
 
-                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
-
-                entity.Property(e => e.PasswordHash)
-                    .IsRequired()
-                    .HasMaxLength(60);
-
-                entity.Property(e => e.PhoneNumber).HasMaxLength(20);
-
                 entity.Property(e => e.Surname).HasMaxLength(30);
-
-                entity.Property(e => e.UserName).HasMaxLength(20);
-
-                entity.Property(e => e.UserStatusId).HasColumnName("User_StatusId");
-
-                entity.HasOne(d => d.UserStatus)
-                    .WithMany(p => p.AspNetUsers)
-                    .HasForeignKey(d => d.UserStatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-            });
-
-            modelBuilder.Entity<AspNetUserClaim>(entity =>
-            {
-                entity.HasIndex(e => e.UserId, "IX_AspNetUserClaims_UserId");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserClaims)
-                    .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserLogin>(entity =>
-            {
-                entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
-
-                entity.HasIndex(e => e.UserId, "IX_AspNetUserLogins_UserId");
-
-                entity.Property(e => e.LoginProvider).HasMaxLength(128);
-
-                entity.Property(e => e.ProviderKey).HasMaxLength(128);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserLogins)
-                    .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserRole>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.RoleId });
-
-                entity.HasIndex(e => e.RoleId, "IX_AspNetUserRoles_RoleId");
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.AspNetUserRoles)
-                    .HasForeignKey(d => d.RoleId);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserRoles)
-                    .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserToken>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
-
-                entity.Property(e => e.LoginProvider).HasMaxLength(128);
-
-                entity.Property(e => e.Name).HasMaxLength(128);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserTokens)
-                    .HasForeignKey(d => d.UserId);
             });
 
             modelBuilder.Entity<Post>(entity =>
@@ -352,17 +270,6 @@ namespace Vismy.Infrastructure.Context
                     .HasMaxLength(20);
             });
 
-            modelBuilder.Entity<UserStatus>(entity =>
-            {
-                entity.ToTable("User_Status");
-
-                entity.Property(e => e.Description).HasMaxLength(160);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(20);
-            });
-
             modelBuilder.Entity<UserUser>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.FollowerId });
@@ -399,8 +306,6 @@ namespace Vismy.Infrastructure.Context
                     .WithOne(p => p.Video)
                     .HasForeignKey<Video>(d => d.PostId);
             });
-
-            OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

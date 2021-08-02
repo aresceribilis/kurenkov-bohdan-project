@@ -20,7 +20,7 @@ namespace Vismy.Core.Models.Implementations
         public int Shared { get; set; }
         public string Description { get; set; }
         public int PostStatusId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public virtual PostStatus PostStatus { get; set; }
         public virtual AspNetUser User { get; set; }

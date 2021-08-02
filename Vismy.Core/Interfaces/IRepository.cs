@@ -11,7 +11,7 @@ namespace Vismy.Core.Interfaces
         public Task AddAsync(T obj);
         public Task UpdateAsync(T obj);
         public Task DeleteAsync(T obj);
-        public Task<T> GetByIdAsync(int id, string includeProperties);
+        //public Task<T> GetByIdAsync(int id, string includeProperties);
         public Task<IEnumerable<T>> GetAsync(
             Expression<Func<T, bool>> filter = null, 
             string includeProperties = null, 

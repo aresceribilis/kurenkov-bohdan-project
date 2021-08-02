@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity;
 using Vismy.Core.Models.Implementations;
 using Vismy.Infrastructure.Context;
 
@@ -30,9 +31,11 @@ namespace Vismy.WEB
                     a => a.MigrationsAssembly("Vismy.Infrastructure")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<AspNetUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<AspNetUser>()
                 .AddEntityFrameworkStores<VismyContext>();
             services.AddControllersWithViews();
+
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

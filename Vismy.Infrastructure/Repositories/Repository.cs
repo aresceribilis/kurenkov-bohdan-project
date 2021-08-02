@@ -39,10 +39,10 @@ namespace Vismy.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<T> GetByIdAsync(int id, string includeProperties)
-        {
-            return (await GetAsync(i => i.Id == id, includeProperties)).FirstOrDefault();
-        }
+        //public async Task<T> GetByIdAsync(int id, string includeProperties)
+        //{
+        //    return (await GetAsync(i => i.Id == id, includeProperties)).FirstOrDefault();
+        //}
 
         public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter = null, string includeProperties = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, int skip = 0, int take = 0)
         {

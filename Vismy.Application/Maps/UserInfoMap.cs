@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Vismy.Application.DTOs;
 using Vismy.Core.Models.Implementations;
 
@@ -8,6 +9,11 @@ namespace Vismy.Application.Maps
     {
         public UserInfoMap()
         {
+            CreateMap<IdentityRole, UserInfoDTO>()
+                .ForMember(@do => @do.RoleName,
+                    opt => opt.MapFrom(dto => dto.Name))
+                .ReverseMap();
+
             CreateMap<AspNetUser, UserInfoDTO>()
                 .ForMember(@do => @do.Id,
                     opt => opt.MapFrom(dto => dto.Id))
@@ -29,10 +35,6 @@ namespace Vismy.Application.Maps
                     opt => opt.MapFrom(dto => dto.PhoneNumber))
                 .ForMember(@do => @do.PhoneNumberConfirmed,
                     opt => opt.MapFrom(dto => dto.PhoneNumberConfirmed))
-                .ForMember(@do => @do.RoleName,
-                    opt => opt.MapFrom(dto => dto.UserStatus.Name))
-                .ForMember(@do => @do.RoleDescription,
-                    opt => opt.MapFrom(dto => dto.UserStatus.Description))
                 .ReverseMap();
         }
     }

@@ -18,6 +18,5 @@ namespace Vismy.Application.DTOs
         public string PhoneNumberConfirmed { get; set; }
 
         public string RoleName { get; set; }
-        public string RoleDescription { get; set; }
     }
 }

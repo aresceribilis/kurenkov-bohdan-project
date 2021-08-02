@@ -14,9 +14,9 @@ namespace Vismy.Application.Interfaces
         public Task AddPostAsync(PostInfoDTO postDto);
         public Task EditPostAsync(PostInfoDTO postDto);
         public Task DeletePostAsync(int postId);
-        public Task FollowUserAsync(int userId, int followingId);
-        public Task ViewPostAsync(int userId, int postId);
-        public Task LikePostAsync(int userId, int postId);
-        public Task MakeReportAsync(int authorId, ReportInfoDTO reportDto);
+        public Task FollowUserAsync(string userId, string followingId);
+        public Task ViewPostAsync(string userId, int postId);
+        public Task LikePostAsync(string userId, int postId);
+        public Task MakeReportAsync(string authorId, ReportInfoDTO reportDto);
     }
 }

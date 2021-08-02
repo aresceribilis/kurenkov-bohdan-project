@@ -7,7 +7,7 @@ namespace Vismy.Core.Models.Joins
 {
     public partial class UserPost
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int PostId { get; set; }
         public int UserPostStatusId { get; set; }
 

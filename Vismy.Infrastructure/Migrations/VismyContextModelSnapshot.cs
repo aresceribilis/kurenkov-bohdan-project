@@ -49,22 +49,22 @@ namespace Vismy.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9be91ad9-6f1a-4dd3-85f2-c8557b6dfd13",
-                            ConcurrencyStamp = "e512cc4b-91c8-4e34-b1fc-119e9c3387b8",
+                            Id = "666bd18d-a7f8-4527-8a63-e0864251273d",
+                            ConcurrencyStamp = "00e303b2-be18-4ade-8b94-f28b84f4704c",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "96f38acc-56f9-49a4-abcb-b91316ae7f3d",
-                            ConcurrencyStamp = "5c66601f-cab0-4f52-89d3-04b259dda583",
+                            Id = "56ca4ab1-ef3d-4cfb-bf8c-ca084305cc31",
+                            ConcurrencyStamp = "74bcffaf-4860-4bce-98c3-dbd704ba17c9",
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
-                            Id = "ed46b8f7-a782-4288-a531-bfc1d5a20df9",
-                            ConcurrencyStamp = "fc5986a5-89fc-42cb-afd1-40f61e338245",
+                            Id = "19ecd314-0c41-4821-ace1-fc6abafa68b7",
+                            ConcurrencyStamp = "84648d9d-7055-43cc-9189-e43ac66eef28",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -121,12 +121,10 @@ namespace Vismy.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -163,12 +161,10 @@ namespace Vismy.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");

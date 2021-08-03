@@ -1,0 +1,50 @@
+﻿@model Vismy.WEB.Models.RegisterVM
+
+@{
+    Layout = null;
+}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Sign in</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Favicons -->
+    <meta name="theme-color" content="#7952b3">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/signin.css" rel="stylesheet">
+</head>
+<body class="text-center">
+
+    <main class="form-signin">
+        <form method="post" asp-controller="Account" asp-action="Register">
+            <div asp-validation-summary="ModelOnly"></div>
+            <h1 class="h3 mb-3 fw-normal">Registration</h1>
+            
+            <div class="form-floating">
+                <input type="email" class="form-control" id="floatingInput" placeholder="Email" asp-for="Email">
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" asp-for="Password">
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Confirm password" asp-for="PasswordConfirm">
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="true" asp-for="RememberMe"> Remember me
+                </label>
+            </div>
+            <input class="w-100 btn btn-lg btn-primary" type="submit" value="Register">
+        </form>
+    </main>
+
+</body>
+</html>

@@ -165,8 +165,8 @@ namespace Vismy.Infrastructure.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -210,8 +210,8 @@ namespace Vismy.Infrastructure.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -441,9 +441,9 @@ namespace Vismy.Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "9be91ad9-6f1a-4dd3-85f2-c8557b6dfd13", "e512cc4b-91c8-4e34-b1fc-119e9c3387b8", "User", "USER" },
-                    { "96f38acc-56f9-49a4-abcb-b91316ae7f3d", "5c66601f-cab0-4f52-89d3-04b259dda583", "Moderator", "MODERATOR" },
-                    { "ed46b8f7-a782-4288-a531-bfc1d5a20df9", "fc5986a5-89fc-42cb-afd1-40f61e338245", "Administrator", "ADMINISTRATOR" }
+                    { "666bd18d-a7f8-4527-8a63-e0864251273d", "00e303b2-be18-4ade-8b94-f28b84f4704c", "User", "USER" },
+                    { "56ca4ab1-ef3d-4cfb-bf8c-ca084305cc31", "74bcffaf-4860-4bce-98c3-dbd704ba17c9", "Moderator", "MODERATOR" },
+                    { "19ecd314-0c41-4821-ace1-fc6abafa68b7", "84648d9d-7055-43cc-9189-e43ac66eef28", "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.InsertData(

@@ -1,12 +1,15 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Vismy.Application.DTOs;
 using Vismy.Application.Interfaces;
 using Vismy.Core.Interfaces;
 using Vismy.Core.Models.Implementations;
 using Vismy.Core.Models.Joins;
 using Vismy.Core.Models.Statuses;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Vismy.Application.Services
 {
@@ -28,17 +31,76 @@ namespace Vismy.Application.Services
         public IRepository<UserPost> UserPostRepository { get; set; }
         public IRepository<UserPostStatus> UserPostStatusRepository { get; set; }
         public IRepository<UserReportAuthor> UserReportAuthorRepository { get; set; }
+        public UserManager<AspNetUser> UserManager { get; set; }
+        public SignInManager<AspNetUser> SignInManager { get; set; }
+        public RoleManager<IdentityRole> RoleManager { get; set; }
 
         public UserService(
             IMapper mapper,
             IRepository<Post> postRepository,
             IRepository<Report> reportRepository,
-            IRepository<AspNetUser> userRepository)
+            IRepository<AspNetUser> userRepository,
+            IRepository<UserUser> userUserRepository,
+            IRepository<UserPost> userPostRepository,
+            IRepository<UserPostStatus> userPostStatusRepository,
+            IRepository<UserReportAuthor> userReportAuthorRepository,
+            UserManager<AspNetUser> userManager,
+            SignInManager<AspNetUser> signInManager,
+            RoleManager<IdentityRole> roleManager)
         {
             Mapper = mapper;
             PostRepository = postRepository;
             ReportRepository = reportRepository;
             UserRepository = userRepository;
+            UserUserRepository = userUserRepository;
+            UserPostRepository = userPostRepository;
+            UserPostStatusRepository = userPostStatusRepository;
+            UserReportAuthorRepository = userReportAuthorRepository;
+            UserManager = userManager;
+            SignInManager = signInManager;
+            RoleManager = roleManager;
+    }
+
+        public async Task<IdentityResult> AddUserAsync(UserInfoDTO userDto, bool rememberMe)
+        {
+            var user = Mapper.Map<AspNetUser>(userDto);
+
+            var result = await UserManager.CreateAsync(user, user.PasswordHash);
+
+            if (!result.Succeeded) return result;
+
+            await SignInManager.SignInAsync(user, rememberMe);
+
+            if (!await RoleManager.RoleExistsAsync("User"))
+                await RoleManager.CreateAsync(new IdentityRole() { Name = "User" });
+
+            await UserManager.AddToRoleAsync(user, "User");
+
+            return result;
+        }
+
+        public async Task ChangeRole(string email, string oldRole, string newRole)
+        {
+            var user = await UserManager.FindByEmailAsync(email);
+
+            if (await RoleManager.RoleExistsAsync(oldRole))
+                if (await UserManager.IsInRoleAsync(user, oldRole))
+                    await UserManager.RemoveFromRoleAsync(user, oldRole);
+
+            if (!await RoleManager.RoleExistsAsync(newRole))
+                await RoleManager.CreateAsync(new IdentityRole() { Name = newRole });
+            await UserManager.AddToRoleAsync(user, newRole);
+
+            await SignInManager.RefreshSignInAsync(user);
+        }
+
+        public async Task SignOut() => await SignInManager.SignOutAsync();
+
+        public async Task<SignInResult> Login(UserInfoDTO userDto)
+        {
+            var user = await UserManager.FindByNameAsync(userDto.Email);
+            
+            return await SignInManager.PasswordSignInAsync(user, userDto.Password, userDto.RememberMe, false);
         }
 
         public async Task AddPostAsync(PostInfoDTO postDto) => await PostRepository.AddAsync(Mapper.Map<Post>(postDto));

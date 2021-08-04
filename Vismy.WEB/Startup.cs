@@ -54,6 +54,9 @@ namespace Vismy.WEB
             //services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRepository<Post>, Repository<Post>>();
+            services.AddScoped<IRepository<Tag>, Repository<Tag>>();
+            services.AddScoped<IRepository<PostTag>, Repository<PostTag>>();
+            services.AddScoped<IRepository<PostStatus>, Repository<PostStatus>>();
             services.AddScoped<IRepository<Report>, Repository<Report>>();
             services.AddScoped<IRepository<AspNetUser>, Repository<AspNetUser>> ();
             services.AddScoped<IRepository<UserUser>, Repository<UserUser>>();

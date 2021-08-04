@@ -54,8 +54,7 @@ namespace Vismy.Infrastructure.Migrations
                 name: "Post_Status",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(160)", maxLength: 160, nullable: true)
                 },
@@ -68,8 +67,7 @@ namespace Vismy.Infrastructure.Migrations
                 name: "Report_Status",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(160)", maxLength: 160, nullable: true)
                 },
@@ -82,8 +80,7 @@ namespace Vismy.Infrastructure.Migrations
                 name: "Tag",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
@@ -95,8 +92,7 @@ namespace Vismy.Infrastructure.Migrations
                 name: "User_Post_Status",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(160)", maxLength: 160, nullable: true)
                 },
@@ -109,8 +105,7 @@ namespace Vismy.Infrastructure.Migrations
                 name: "User_Report_Moderator_Status",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(160)", maxLength: 160, nullable: true)
                 },
@@ -239,25 +234,24 @@ namespace Vismy.Infrastructure.Migrations
                         name: "FK_User_User_AspNetUsers_FollowerId",
                         column: x => x.FollowerId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_User_User_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Posts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Shared = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Post_StatusId = table.Column<int>(type: "int", nullable: false),
+                    Post_StatusId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -268,21 +262,21 @@ namespace Vismy.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Posts_Post_Status_Post_StatusId",
                         column: x => x.Post_StatusId,
                         principalTable: "Post_Status",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Post_Tag",
                 columns: table => new
                 {
-                    PostId = table.Column<int>(type: "int", nullable: false),
-                    TagId = table.Column<int>(type: "int", nullable: false)
+                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TagId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -292,24 +286,23 @@ namespace Vismy.Infrastructure.Migrations
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Post_Tag_Tag_TagId",
                         column: x => x.TagId,
                         principalTable: "Tag",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Reports",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(160)", maxLength: 160, nullable: true),
-                    PostId = table.Column<int>(type: "int", nullable: false),
-                    Report_StatusId = table.Column<int>(type: "int", nullable: false)
+                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Report_StatusId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -325,7 +318,7 @@ namespace Vismy.Infrastructure.Migrations
                         column: x => x.Report_StatusId,
                         principalTable: "Report_Status",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -333,8 +326,8 @@ namespace Vismy.Infrastructure.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PostId = table.Column<int>(type: "int", nullable: false),
-                    User_Post_StatusId = table.Column<int>(type: "int", nullable: false)
+                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    User_Post_StatusId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -344,39 +337,16 @@ namespace Vismy.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_User_Post_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_User_Post_User_Post_Status_User_Post_StatusId",
                         column: x => x.User_Post_StatusId,
                         principalTable: "User_Post_Status",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Video",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Length = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PostId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Video", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Video_Posts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "Posts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -386,7 +356,7 @@ namespace Vismy.Infrastructure.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ReportId = table.Column<int>(type: "int", nullable: false)
+                    ReportId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -396,13 +366,12 @@ namespace Vismy.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_User_Report_Author_Reports_ReportId",
                         column: x => x.ReportId,
                         principalTable: "Reports",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -410,8 +379,8 @@ namespace Vismy.Infrastructure.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ReportId = table.Column<int>(type: "int", nullable: false),
-                    User_Report_Moderator_StatusId = table.Column<int>(type: "int", nullable: false)
+                    ReportId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    User_Report_Moderator_StatusId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -421,19 +390,18 @@ namespace Vismy.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_User_Report_Moderator_Reports_ReportId",
                         column: x => x.ReportId,
                         principalTable: "Reports",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_User_Report_Moderator_User_Report_Moderator_Status_User_Report_Moderator_StatusId",
                         column: x => x.User_Report_Moderator_StatusId,
                         principalTable: "User_Report_Moderator_Status",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -441,9 +409,9 @@ namespace Vismy.Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "666bd18d-a7f8-4527-8a63-e0864251273d", "00e303b2-be18-4ade-8b94-f28b84f4704c", "User", "USER" },
-                    { "56ca4ab1-ef3d-4cfb-bf8c-ca084305cc31", "74bcffaf-4860-4bce-98c3-dbd704ba17c9", "Moderator", "MODERATOR" },
-                    { "19ecd314-0c41-4821-ace1-fc6abafa68b7", "84648d9d-7055-43cc-9189-e43ac66eef28", "Administrator", "ADMINISTRATOR" }
+                    { "eb6894bb-9880-4a58-a2d5-d2f3ecda15af", "dfd78f85-393d-4d62-8cd9-8414f4e687d0", "User", "USER" },
+                    { "e5f2afd0-e813-4823-8eed-ef4396ae0c7b", "7effe6a0-6a0c-4ca5-8173-4eda1b42891a", "Moderator", "MODERATOR" },
+                    { "d8d5b22c-0c1e-49e4-a2ef-17aa9385ec41", "475d1e32-0387-4e2c-a3be-a83b222900f9", "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -451,10 +419,10 @@ namespace Vismy.Infrastructure.Migrations
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1, "None", "None" },
-                    { 2, "Hidden", "Hidden" },
-                    { 3, "Frozen", "Frozen" },
-                    { 4, "Removed", "Removed" }
+                    { "fdbd2f91-75e0-4105-9758-308b6bc72a56", "None", "None" },
+                    { "b205d35c-cb73-4c10-b218-7ea5ba7efa1e", "Hidden", "Hidden" },
+                    { "81533aef-7319-45b7-8c31-bf251634c240", "Frozen", "Frozen" },
+                    { "7d56567d-c59d-41eb-9149-68e3a46c92d0", "Removed", "Removed" }
                 });
 
             migrationBuilder.InsertData(
@@ -462,10 +430,10 @@ namespace Vismy.Infrastructure.Migrations
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Violence", "Violence" },
-                    { 2, "Sexual content", "Sexual content" },
-                    { 3, "Bullying", "Bullying" },
-                    { 4, "Drugs", "Drugs" }
+                    { "f720645b-08b0-454f-83d1-80f8303a6977", "Violence", "Violence" },
+                    { "81fbfaea-cd48-4ff9-87ff-456e6721db86", "Sexual content", "Sexual content" },
+                    { "a9de91b7-bdd3-4ad9-b39f-943ea20b8e17", "Bullying", "Bullying" },
+                    { "ba60780d-d69d-401c-9afa-085d6b87baac", "Drugs", "Drugs" }
                 });
 
             migrationBuilder.InsertData(
@@ -473,8 +441,8 @@ namespace Vismy.Infrastructure.Migrations
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1, "View shows you viewed the post before.", "Viewed" },
-                    { 2, "Like shows you appreciate the post.", "Liked" }
+                    { "090891bd-e809-4b87-ae04-940e029f2fdb", "View shows you viewed the post before.", "Viewed" },
+                    { "797de4fa-241d-4d25-b719-a8e644500f24", "Like shows you appreciate the post.", "Liked" }
                 });
 
             migrationBuilder.InsertData(
@@ -482,8 +450,8 @@ namespace Vismy.Infrastructure.Migrations
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Approved", "Approved" },
-                    { 2, "Disapproved", "Disapproved" }
+                    { "0ec0712a-701e-4188-b06b-f8394e1129e5", "Approved", "Approved" },
+                    { "751c1269-5e8a-4f05-a269-bc51c1267e45", "Disapproved", "Disapproved" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -579,12 +547,6 @@ namespace Vismy.Infrastructure.Migrations
                 name: "IX_User_User_FollowerId",
                 table: "User_User",
                 column: "FollowerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Video_PostId",
-                table: "Video",
-                column: "PostId",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -618,9 +580,6 @@ namespace Vismy.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "User_User");
-
-            migrationBuilder.DropTable(
-                name: "Video");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

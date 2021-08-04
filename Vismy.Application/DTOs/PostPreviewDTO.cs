@@ -1,9 +1,11 @@
-﻿namespace Vismy.Application.DTOs
+﻿using System;
+
+namespace Vismy.Application.DTOs
 {
     // Post's preview
     public class PostPreviewDTO
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public int Viewed { get; set; }
         public string Description { get; set; }
     }

@@ -9,8 +9,8 @@ namespace Vismy.Core.Models.Joins
     public partial class UserPost : IEntity
     {
         public string UserId { get; set; }
-        public int PostId { get; set; }
-        public int UserPostStatusId { get; set; }
+        public string PostId { get; set; }
+        public string UserPostStatusId { get; set; }
 
         public virtual Post Post { get; set; }
         public virtual AspNetUser User { get; set; }

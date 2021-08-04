@@ -3,7 +3,7 @@
     // Report's detail info
     public class ReportInfoDTO
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Description { get; set; }
         public int Score { get; set; }
         public int ScoreApproved { get; set; }

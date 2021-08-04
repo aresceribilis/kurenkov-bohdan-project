@@ -23,6 +23,46 @@ namespace Vismy.WEB.Controllers
         }
 
         [HttpGet]
+        public IActionResult PostCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostCreate(PostCreateVM model)
+        {
+            if (model.Title == "")
+            {
+                ModelState.AddModelError("", "Title have to be indicated.");
+            }
+
+            if (model.Description == "")
+            {
+                ModelState.AddModelError("", "Description have to be indicated.");
+            }
+
+            if (!ModelState.IsValid) return View(model);
+
+            var postDto = new PostInfoDTO()
+            {
+                Id = Guid.NewGuid().ToString(),
+                AuthorId = (await _userService.GetUserIdAsync(this.User)),
+                Title = model.Title,
+                Description = model.Description,
+                Tags = model.Tags.Split()
+            };
+
+            var isSuccess = await _userService.AddPostAsync(postDto);
+
+            if (isSuccess)
+                return RedirectToAction("Index", "Home");
+            
+            ModelState.AddModelError("", "Error with post adding.");
+
+            return View(model);
+        }
+
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -43,7 +83,15 @@ namespace Vismy.WEB.Controllers
 
             if (!ModelState.IsValid) return View(model);
             
-            var userDto = new UserInfoDTO () { Id = Guid.NewGuid().ToString(), Email = model.Email, Password = model.Password, Nickname = model.Email, RoleName = "User", IconPath = "default-avatar.jpg" };
+            var userDto = new UserInfoDTO ()
+            {
+                Id = Guid.NewGuid().ToString(), 
+                Email = model.Email, 
+                Password = model.Password, 
+                Nickname = model.Email, 
+                RoleName = "User", 
+                IconPath = "default-avatar.jpg"
+            };
 
             var result = await _userService.AddUserAsync(userDto, model.RememberMe);
 

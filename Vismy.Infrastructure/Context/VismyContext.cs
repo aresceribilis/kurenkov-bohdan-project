@@ -34,7 +34,6 @@ namespace Vismy.Infrastructure.Context
         public virtual DbSet<UserReportModerator> UserReportModerators { get; set; }
         public virtual DbSet<UserReportModeratorStatus> UserReportModeratorStatuses { get; set; }
         public virtual DbSet<UserUser> UserUsers { get; set; }
-        public virtual DbSet<Video> Videos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -57,24 +56,24 @@ namespace Vismy.Infrastructure.Context
                 new IdentityRole() {Name = "Administrator", NormalizedName = "ADMINISTRATOR"});
 
             modelBuilder.Entity<ReportStatus>().HasData(
-                new ReportStatus() {Id = 1, Name = "Violence", Description = "Violence"},
-                new ReportStatus() {Id = 2, Name = "Sexual content", Description = "Sexual content"},
-                new ReportStatus() {Id = 3, Name = "Bullying", Description = "Bullying"},
-                new ReportStatus() {Id = 4, Name = "Drugs", Description = "Drugs"});
+                new ReportStatus() {Id = Guid.NewGuid().ToString(), Name = "Violence", Description = "Violence"},
+                new ReportStatus() {Id = Guid.NewGuid().ToString(), Name = "Sexual content", Description = "Sexual content"},
+                new ReportStatus() {Id = Guid.NewGuid().ToString(), Name = "Bullying", Description = "Bullying"},
+                new ReportStatus() {Id = Guid.NewGuid().ToString(), Name = "Drugs", Description = "Drugs"});
 
             modelBuilder.Entity<PostStatus>().HasData(
-                new PostStatus() { Id = 1, Name = "None", Description = "None" },
-                new PostStatus() { Id = 2, Name = "Hidden", Description = "Hidden" },
-                new PostStatus() { Id = 3, Name = "Frozen", Description = "Frozen" },
-                new PostStatus() { Id = 4, Name = "Removed", Description = "Removed" });
+                new PostStatus() {Id = Guid.NewGuid().ToString(), Name = "None", Description = "None"},
+                new PostStatus() {Id = Guid.NewGuid().ToString(), Name = "Hidden", Description = "Hidden"},
+                new PostStatus() {Id = Guid.NewGuid().ToString(), Name = "Frozen", Description = "Frozen"},
+                new PostStatus() {Id = Guid.NewGuid().ToString(), Name = "Removed", Description = "Removed"});
 
             modelBuilder.Entity<UserPostStatus>().HasData(
-                new UserPostStatus() { Id = 1, Name = "Viewed", Description = "View shows you viewed the post before." },
-                new UserPostStatus() { Id = 2, Name = "Liked", Description = "Like shows you appreciate the post." });
+                new UserPostStatus() {Id = Guid.NewGuid().ToString(), Name = "Viewed", Description = "View shows you viewed the post before."},
+                new UserPostStatus() {Id = Guid.NewGuid().ToString(), Name = "Liked", Description = "Like shows you appreciate the post."});
 
             modelBuilder.Entity<UserReportModeratorStatus>().HasData(
-                new UserReportModeratorStatus() { Id = 1, Name = "Approved", Description = "Approved" },
-                new PostStatus() { Id = 2, Name = "Disapproved", Description = "Disapproved" });
+                new UserReportModeratorStatus() {Id = Guid.NewGuid().ToString(), Name = "Approved", Description = "Approved"},
+                new UserReportModeratorStatus() {Id = Guid.NewGuid().ToString(), Name = "Disapproved", Description = "Disapproved"});
 
             modelBuilder.Entity<AspNetUser>(entity =>
             {
@@ -96,11 +95,12 @@ namespace Vismy.Infrastructure.Context
                 entity.HasOne(d => d.PostStatus)
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.PostStatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Posts)
-                    .HasForeignKey(d => d.UserId);
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<PostStatus>(entity =>
@@ -125,12 +125,12 @@ namespace Vismy.Infrastructure.Context
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.PostTags)
                     .HasForeignKey(d => d.PostId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.Tag)
                     .WithMany(p => p.PostTags)
                     .HasForeignKey(d => d.TagId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Report>(entity =>
@@ -145,12 +145,13 @@ namespace Vismy.Infrastructure.Context
 
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.Reports)
-                    .HasForeignKey(d => d.PostId);
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.ReportStatus)
                     .WithMany(p => p.Reports)
                     .HasForeignKey(d => d.ReportStatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<ReportStatus>(entity =>
@@ -188,17 +189,17 @@ namespace Vismy.Infrastructure.Context
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.UserPosts)
                     .HasForeignKey(d => d.PostId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserPosts)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.UserPostStatus)
                     .WithMany(p => p.UserPosts)
                     .HasForeignKey(d => d.UserPostStatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<UserPostStatus>(entity =>
@@ -223,12 +224,12 @@ namespace Vismy.Infrastructure.Context
                 entity.HasOne(d => d.Report)
                     .WithMany(p => p.UserReportAuthors)
                     .HasForeignKey(d => d.ReportId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserReportAuthors)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<UserReportModerator>(entity =>
@@ -246,17 +247,17 @@ namespace Vismy.Infrastructure.Context
                 entity.HasOne(d => d.Report)
                     .WithMany(p => p.UserReportModerators)
                     .HasForeignKey(d => d.ReportId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserReportModerators)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.UserReportModeratorStatus)
                     .WithMany(p => p.UserReportModerators)
                     .HasForeignKey(d => d.UserReportModeratorStatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<UserReportModeratorStatus>(entity =>
@@ -281,30 +282,12 @@ namespace Vismy.Infrastructure.Context
                 entity.HasOne(d => d.Follower)
                     .WithMany(p => p.UserUserFollowers)
                     .HasForeignKey(d => d.FollowerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserUserUsers)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-            });
-
-            modelBuilder.Entity<Video>(entity =>
-            {
-                entity.ToTable("Video");
-
-                entity.HasIndex(e => e.PostId, "IX_Video_PostId")
-                    .IsUnique();
-
-                entity.Property(e => e.Path).IsRequired();
-
-                entity.Property(e => e.Title)
-                    .IsRequired()
-                    .HasMaxLength(20);
-
-                entity.HasOne(d => d.Post)
-                    .WithOne(p => p.Video)
-                    .HasForeignKey<Video>(d => d.PostId);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
 

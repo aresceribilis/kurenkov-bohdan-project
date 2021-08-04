@@ -5,7 +5,7 @@ namespace Vismy.Application.DTOs
     // Post's users who viewed
     public class PostUsersViewedDTO
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public ICollection<UserPreviewDTO> Viewers { get; set; }
     }

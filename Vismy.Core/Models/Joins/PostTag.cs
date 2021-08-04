@@ -1,13 +1,14 @@
 ﻿using Vismy.Core.Models.Implementations;
+using Vismy.Core.Models.Interfaces;
 
 #nullable disable
 
 namespace Vismy.Core.Models.Joins
 {
-    public partial class PostTag
+    public partial class PostTag : IEntity
     {
-        public int PostId { get; set; }
-        public int TagId { get; set; }
+        public string PostId { get; set; }
+        public string TagId { get; set; }
 
         public virtual Post Post { get; set; }
         public virtual Tag Tag { get; set; }

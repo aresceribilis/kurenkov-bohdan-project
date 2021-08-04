@@ -49,22 +49,22 @@ namespace Vismy.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "666bd18d-a7f8-4527-8a63-e0864251273d",
-                            ConcurrencyStamp = "00e303b2-be18-4ade-8b94-f28b84f4704c",
+                            Id = "eb6894bb-9880-4a58-a2d5-d2f3ecda15af",
+                            ConcurrencyStamp = "dfd78f85-393d-4d62-8cd9-8414f4e687d0",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "56ca4ab1-ef3d-4cfb-bf8c-ca084305cc31",
-                            ConcurrencyStamp = "74bcffaf-4860-4bce-98c3-dbd704ba17c9",
+                            Id = "e5f2afd0-e813-4823-8eed-ef4396ae0c7b",
+                            ConcurrencyStamp = "7effe6a0-6a0c-4ca5-8173-4eda1b42891a",
                             Name = "Moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
-                            Id = "19ecd314-0c41-4821-ace1-fc6abafa68b7",
-                            ConcurrencyStamp = "84648d9d-7055-43cc-9189-e43ac66eef28",
+                            Id = "d8d5b22c-0c1e-49e4-a2ef-17aa9385ec41",
+                            ConcurrencyStamp = "475d1e32-0387-4e2c-a3be-a83b222900f9",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -255,21 +255,22 @@ namespace Vismy.Infrastructure.Migrations
 
             modelBuilder.Entity("Vismy.Core.Models.Implementations.Post", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("PostStatusId")
-                        .HasColumnType("int")
+                    b.Property<string>("PostStatusId")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Post_StatusId");
 
                     b.Property<int>("Shared")
                         .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -285,20 +286,18 @@ namespace Vismy.Infrastructure.Migrations
 
             modelBuilder.Entity("Vismy.Core.Models.Implementations.Report", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(160)
                         .HasColumnType("nvarchar(160)");
 
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
+                    b.Property<string>("PostId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ReportStatusId")
-                        .HasColumnType("int")
+                    b.Property<string>("ReportStatusId")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Report_StatusId");
 
                     b.HasKey("Id");
@@ -312,10 +311,8 @@ namespace Vismy.Infrastructure.Migrations
 
             modelBuilder.Entity("Vismy.Core.Models.Implementations.Tag", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -327,43 +324,13 @@ namespace Vismy.Infrastructure.Migrations
                     b.ToTable("Tag");
                 });
 
-            modelBuilder.Entity("Vismy.Core.Models.Implementations.Video", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<TimeSpan>("Length")
-                        .HasColumnType("time");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex(new[] { "PostId" }, "IX_Video_PostId")
-                        .IsUnique();
-
-                    b.ToTable("Video");
-                });
-
             modelBuilder.Entity("Vismy.Core.Models.Joins.PostTag", b =>
                 {
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
+                    b.Property<string>("PostId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("TagId")
-                        .HasColumnType("int");
+                    b.Property<string>("TagId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("PostId", "TagId");
 
@@ -377,11 +344,11 @@ namespace Vismy.Infrastructure.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
+                    b.Property<string>("PostId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("UserPostStatusId")
-                        .HasColumnType("int")
+                    b.Property<string>("UserPostStatusId")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("User_Post_StatusId");
 
                     b.HasKey("UserId", "PostId");
@@ -398,8 +365,8 @@ namespace Vismy.Infrastructure.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ReportId")
-                        .HasColumnType("int");
+                    b.Property<string>("ReportId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId", "ReportId");
 
@@ -413,11 +380,11 @@ namespace Vismy.Infrastructure.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ReportId")
-                        .HasColumnType("int");
+                    b.Property<string>("ReportId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("UserReportModeratorStatusId")
-                        .HasColumnType("int")
+                    b.Property<string>("UserReportModeratorStatusId")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("User_Report_Moderator_StatusId");
 
                     b.HasKey("UserId", "ReportId");
@@ -446,10 +413,8 @@ namespace Vismy.Infrastructure.Migrations
 
             modelBuilder.Entity("Vismy.Core.Models.Statuses.PostStatus", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(160)
@@ -467,25 +432,25 @@ namespace Vismy.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = "fdbd2f91-75e0-4105-9758-308b6bc72a56",
                             Description = "None",
                             Name = "None"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = "b205d35c-cb73-4c10-b218-7ea5ba7efa1e",
                             Description = "Hidden",
                             Name = "Hidden"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = "81533aef-7319-45b7-8c31-bf251634c240",
                             Description = "Frozen",
                             Name = "Frozen"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = "7d56567d-c59d-41eb-9149-68e3a46c92d0",
                             Description = "Removed",
                             Name = "Removed"
                         });
@@ -493,10 +458,8 @@ namespace Vismy.Infrastructure.Migrations
 
             modelBuilder.Entity("Vismy.Core.Models.Statuses.ReportStatus", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(160)
@@ -514,25 +477,25 @@ namespace Vismy.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = "f720645b-08b0-454f-83d1-80f8303a6977",
                             Description = "Violence",
                             Name = "Violence"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = "81fbfaea-cd48-4ff9-87ff-456e6721db86",
                             Description = "Sexual content",
                             Name = "Sexual content"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = "a9de91b7-bdd3-4ad9-b39f-943ea20b8e17",
                             Description = "Bullying",
                             Name = "Bullying"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = "ba60780d-d69d-401c-9afa-085d6b87baac",
                             Description = "Drugs",
                             Name = "Drugs"
                         });
@@ -540,10 +503,8 @@ namespace Vismy.Infrastructure.Migrations
 
             modelBuilder.Entity("Vismy.Core.Models.Statuses.UserPostStatus", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(160)
@@ -561,13 +522,13 @@ namespace Vismy.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = "090891bd-e809-4b87-ae04-940e029f2fdb",
                             Description = "View shows you viewed the post before.",
                             Name = "Viewed"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = "797de4fa-241d-4d25-b719-a8e644500f24",
                             Description = "Like shows you appreciate the post.",
                             Name = "Liked"
                         });
@@ -575,10 +536,8 @@ namespace Vismy.Infrastructure.Migrations
 
             modelBuilder.Entity("Vismy.Core.Models.Statuses.UserReportModeratorStatus", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(160)
@@ -596,13 +555,13 @@ namespace Vismy.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = "0ec0712a-701e-4188-b06b-f8394e1129e5",
                             Description = "Approved",
                             Name = "Approved"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = "751c1269-5e8a-4f05-a269-bc51c1267e45",
                             Description = "Disapproved",
                             Name = "Disapproved"
                         });
@@ -664,11 +623,12 @@ namespace Vismy.Infrastructure.Migrations
                     b.HasOne("Vismy.Core.Models.Statuses.PostStatus", "PostStatus")
                         .WithMany("Posts")
                         .HasForeignKey("PostStatusId")
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Vismy.Core.Models.Implementations.AspNetUser", "User")
                         .WithMany("Posts")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("PostStatus");
 
@@ -680,28 +640,16 @@ namespace Vismy.Infrastructure.Migrations
                     b.HasOne("Vismy.Core.Models.Implementations.Post", "Post")
                         .WithMany("Reports")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Vismy.Core.Models.Statuses.ReportStatus", "ReportStatus")
                         .WithMany("Reports")
                         .HasForeignKey("ReportStatusId")
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Post");
 
                     b.Navigation("ReportStatus");
-                });
-
-            modelBuilder.Entity("Vismy.Core.Models.Implementations.Video", b =>
-                {
-                    b.HasOne("Vismy.Core.Models.Implementations.Post", "Post")
-                        .WithOne("Video")
-                        .HasForeignKey("Vismy.Core.Models.Implementations.Video", "PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("Vismy.Core.Models.Joins.PostTag", b =>
@@ -709,11 +657,13 @@ namespace Vismy.Infrastructure.Migrations
                     b.HasOne("Vismy.Core.Models.Implementations.Post", "Post")
                         .WithMany("PostTags")
                         .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Vismy.Core.Models.Implementations.Tag", "Tag")
                         .WithMany("PostTags")
                         .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Post");
@@ -726,17 +676,19 @@ namespace Vismy.Infrastructure.Migrations
                     b.HasOne("Vismy.Core.Models.Implementations.Post", "Post")
                         .WithMany("UserPosts")
                         .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Vismy.Core.Models.Implementations.AspNetUser", "User")
                         .WithMany("UserPosts")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Vismy.Core.Models.Statuses.UserPostStatus", "UserPostStatus")
                         .WithMany("UserPosts")
                         .HasForeignKey("UserPostStatusId")
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Post");
 
@@ -750,11 +702,13 @@ namespace Vismy.Infrastructure.Migrations
                     b.HasOne("Vismy.Core.Models.Implementations.Report", "Report")
                         .WithMany("UserReportAuthors")
                         .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Vismy.Core.Models.Implementations.AspNetUser", "User")
                         .WithMany("UserReportAuthors")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Report");
@@ -767,17 +721,19 @@ namespace Vismy.Infrastructure.Migrations
                     b.HasOne("Vismy.Core.Models.Implementations.Report", "Report")
                         .WithMany("UserReportModerators")
                         .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Vismy.Core.Models.Implementations.AspNetUser", "User")
                         .WithMany("UserReportModerators")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Vismy.Core.Models.Statuses.UserReportModeratorStatus", "UserReportModeratorStatus")
                         .WithMany("UserReportModerators")
                         .HasForeignKey("UserReportModeratorStatusId")
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Report");
 
@@ -791,11 +747,13 @@ namespace Vismy.Infrastructure.Migrations
                     b.HasOne("Vismy.Core.Models.Implementations.AspNetUser", "Follower")
                         .WithMany("UserUserFollowers")
                         .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Vismy.Core.Models.Implementations.AspNetUser", "User")
                         .WithMany("UserUserUsers")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Follower");
@@ -825,8 +783,6 @@ namespace Vismy.Infrastructure.Migrations
                     b.Navigation("Reports");
 
                     b.Navigation("UserPosts");
-
-                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("Vismy.Core.Models.Implementations.Report", b =>

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -69,6 +71,54 @@ namespace Vismy.Application.Services
             UserManager = userManager;
             SignInManager = signInManager;
             RoleManager = roleManager;
+        }
+
+        public async Task<IEnumerable<UserPreviewDTO>> GetUserPreviewsAsync(int pageSize, string filter, int pageIndex = 0)
+        {
+            IEnumerable<AspNetUser> users;
+
+            if (filter != null)
+            {
+                users = await UserRepository
+                .GetAsync(i => 
+                    (i.Name.Contains(filter)) ||
+                    (i.Surname.Contains(filter)) ||
+                    (i.UserName.Contains(filter)), 
+                    "", 
+                    null, 
+                    pageIndex * pageSize, 
+                    pageSize);
+            }
+            else
+            {
+                users = await UserRepository
+                    .GetAsync(
+                        null, 
+                        "", 
+                        null, 
+                        pageIndex * pageSize, 
+                        pageSize);
+            }
+
+            return users.Select(user => new UserPreviewDTO()
+                {
+                    IconPath = user.IconPath,
+                    Id = user.Id,
+                    Name = user.Name,
+                    Surname = user.Surname,
+                    Nickname = user.UserName
+                });
+        }
+
+        public async Task<int> GetUsersCountAsync(string filter = null)
+        {
+            if (filter == null)
+                return await UserRepository.GetCountAsync();
+
+            return await UserRepository.GetCountAsync(u =>
+                u.Name.Contains(filter) ||
+                u.Surname.Contains(filter) ||
+                u.UserName.Contains(filter));
         }
 
         public async Task<string> GetUserIdAsync(ClaimsPrincipal userClaim) => (await UserManager.GetUserAsync(userClaim)).Id;

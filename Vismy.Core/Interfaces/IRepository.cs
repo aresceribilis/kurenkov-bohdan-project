@@ -8,6 +8,7 @@ namespace Vismy.Core.Interfaces
 {
     public interface IRepository<T>
     {
+        public Task<int> GetCountAsync(Expression<Func<T, bool>> filter = null);
         public Task AddAsync(T obj);
         public Task UpdateAsync(T obj);
         public Task DeleteAsync(T obj);

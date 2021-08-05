@@ -21,6 +21,14 @@ namespace Vismy.Infrastructure.Repositories
             _dbSet = _context.Set<T>();
         }
 
+        public async Task<int> GetCountAsync(Expression<Func<T, bool>> filter = null)
+        {
+            if (filter == null)
+                return await _dbSet.CountAsync();
+
+            return await _dbSet.Where(filter).CountAsync();
+        }
+
         public async Task AddAsync(T obj)
         {
             await _dbSet.AddAsync(obj);

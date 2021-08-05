@@ -13,11 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vismy.Core", "Vismy.Core\Vismy.Core.csproj", "{C8467151-F674-4B51-8B8F-C621189D5C7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vismy.Application", "Vismy.Application\Vismy.Application.csproj", "{D7A16828-2B73-4996-9772-45B01543EE8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vismy.Application", "Vismy.Application\Vismy.Application.csproj", "{D7A16828-2B73-4996-9772-45B01543EE8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vismy.Infrastructure", "Vismy.Infrastructure\Vismy.Infrastructure.csproj", "{0C40C2FC-C3F6-4179-99A0-BF07B45AD98C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vismy.Infrastructure", "Vismy.Infrastructure\Vismy.Infrastructure.csproj", "{0C40C2FC-C3F6-4179-99A0-BF07B45AD98C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vismy.WEB", "Vismy.WEB\Vismy.WEB.csproj", "{1CA2453C-4609-4F9F-B1D0-70AC7594D5E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vismy.WEB", "Vismy.WEB\Vismy.WEB.csproj", "{1CA2453C-4609-4F9F-B1D0-70AC7594D5E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{38CBFC02-303D-4C82-B43E-602322F27722}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vismy.Test", "Vismy.Test\Vismy.Test.csproj", "{ABAF586D-C548-4F0B-BC56-B6737383DCED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,10 @@ Global
 		{1CA2453C-4609-4F9F-B1D0-70AC7594D5E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CA2453C-4609-4F9F-B1D0-70AC7594D5E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CA2453C-4609-4F9F-B1D0-70AC7594D5E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABAF586D-C548-4F0B-BC56-B6737383DCED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABAF586D-C548-4F0B-BC56-B6737383DCED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABAF586D-C548-4F0B-BC56-B6737383DCED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABAF586D-C548-4F0B-BC56-B6737383DCED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,7 @@ Global
 		{D7A16828-2B73-4996-9772-45B01543EE8D} = {3A21B6E9-822E-4F5C-8F60-B84956751C5C}
 		{0C40C2FC-C3F6-4179-99A0-BF07B45AD98C} = {5263D5EC-45D0-430E-AC26-AAD877131770}
 		{1CA2453C-4609-4F9F-B1D0-70AC7594D5E8} = {3607A2C2-16A2-4C0D-86ED-DAEDFCAB50AE}
+		{ABAF586D-C548-4F0B-BC56-B6737383DCED} = {38CBFC02-303D-4C82-B43E-602322F27722}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {06834E0D-1414-4680-96FD-7115692B16D9}

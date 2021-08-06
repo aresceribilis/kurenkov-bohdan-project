@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Vismy.Application.DTOs;
 using Vismy.Application.Interfaces;
 using Vismy.WEB.Models;
@@ -23,12 +24,14 @@ namespace Vismy.WEB.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult PostCreate()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> PostCreate(PostCreateVM model)
         {
             if (model.Title == "")
@@ -138,6 +141,7 @@ namespace Vismy.WEB.Controllers
             return View(model);
         }
 
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _userService.SignOut();
@@ -145,6 +149,7 @@ namespace Vismy.WEB.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         public async Task<IActionResult> ChangeRole(string email, string oldRole, string newRole)
         {
             await _userService.ChangeRole(email, oldRole, newRole);

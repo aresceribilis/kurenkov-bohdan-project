@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Vismy.Application.DTOs;
 using Vismy.Application.Interfaces;
 using Vismy.WEB.Models;
 using Vismy.WEB.ViewModels;
@@ -22,6 +23,30 @@ namespace Vismy.WEB.Controllers
             _userService = userService;
         }
         
+        public async Task<IActionResult> UserInfo(string nickname = null)
+        {
+            UserInfoDTO userInfo;
+
+            if (nickname == null)
+            {
+                userInfo = (await _userService.GetUserInfoAsync(this.User));
+            }
+            else
+            {
+                userInfo = await _userService.GetUserInfoAsync(nickname);
+            }
+
+            if (userInfo == null)
+            {
+                Response.StatusCode = 404;
+                return View("UserNotFound", nickname);
+            }
+
+            var model = new UserInfoVM() { User = userInfo };
+
+            return View(model);
+        }
+
         public async Task<IActionResult> UserPreviews(int pageNum = 1, string filter = null)
         {
             const int pageSize = 2;

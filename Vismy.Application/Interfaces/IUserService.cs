@@ -11,6 +11,8 @@ namespace Vismy.Application.Interfaces
 {
     public interface IUserService
     {
+        public Task<UserInfoDTO> GetUserInfoAsync(ClaimsPrincipal userClaim);
+        public Task<UserInfoDTO> GetUserInfoAsync(string nickname);
         public Task<IEnumerable<UserPreviewDTO>> GetUserPreviewsAsync(int pageSize, string filter, int pageIndex = 0);
         public Task<int> GetUsersCountAsync(string filter = null);
         public Task<string> GetUserIdAsync(ClaimsPrincipal userClaim);

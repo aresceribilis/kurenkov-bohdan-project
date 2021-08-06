@@ -1,48 +1,57 @@
 ﻿@model Vismy.WEB.Models.UserPreviewsVM
 @{
-    ViewData["Title"] = "Users";
     var hasPreviousPage = Model.PageViewModel.HasPreviousPage ? "" : "disabled";
     var hasNextPage = Model.PageViewModel.HasNextPage ? "" : "disabled";
 }
 
-<h2>Users</h2>
+<!DOCTYPE html>
 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Users</title>
+</head>
+<body>
+    <main>
+        <h2>Users</h2>
+        <form asp-action="UserPreviews" method="get">
+            <div class="form-actions">
+                <p>
+                    Find: <input type="text" name="filter" value="@ViewData["Filter"]" />
+                    <input type="submit" value="Search" class="btn" />
+                    <a asp-action="UserPreviews">Back to full list</a>
+                </p>
+            </div>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nickname</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var u in Model.Users)
+                {
+                    <tr>
+                        <td><a asp-action="UserInfo" asp-route-nickname="@u.Nickname">@u.Nickname</a></td>
+                        <td>@u.Name</td>
+                        <td>@u.Surname</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-<form asp-action="UserPreviews" method="get">
-    <div class="form-actions">
-        <p>
-            Find: <input type="text" name="filter" value="@ViewData["Filter"]"/>
-            <input type="submit" value="Search" class="btn"/>
-            <a asp-action="UserPreviews">Back to full list</a>
-        </p>
-    </div>
-</form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Nickname</th>
-            <th>Name</th>
-            <th>Surname</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var u in Model.Users)
-        {
-            <tr>
-                <td>@u.Nickname</td>
-                <td>@u.Name</td>
-                <td>@u.Surname</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <a asp-action="UserPreviews"
+           asp-route-filter="@ViewData["Filter"]"
+           asp-route-pageNum="@(Model.PageViewModel.PageNumber - 1)"
+           class="btn btn-outline-dark @hasPreviousPage">Previous</a>
 
-<a asp-action="UserPreviews" 
-   asp-route-filter="@ViewData["Filter"]" 
-   asp-route-pageNum="@(Model.PageViewModel.PageNumber - 1)"
-   class="btn btn-outline-dark @hasPreviousPage">Previous</a>
-
-<a asp-action="UserPreviews" 
-   asp-route-filter="@ViewData["Filter"]" 
-   asp-route-pageNum="@(Model.PageViewModel.PageNumber + 1)"
-   class="btn btn-outline-dark @hasNextPage">Next</a>
+        <a asp-action="UserPreviews"
+           asp-route-filter="@ViewData["Filter"]"
+           asp-route-pageNum="@(Model.PageViewModel.PageNumber + 1)"
+           class="btn btn-outline-dark @hasNextPage">Next</a>
+    </main>
+</body>
+</html>

@@ -73,6 +73,20 @@ namespace Vismy.Application.Services
             RoleManager = roleManager;
         }
 
+        public async Task<UserInfoDTO> GetUserInfoAsync(ClaimsPrincipal userClaim) => Mapper.Map<UserInfoDTO>(await UserManager.GetUserAsync(userClaim));
+
+        public async Task<UserInfoDTO> GetUserInfoAsync(string nickname)
+        {
+            try
+            {
+                return Mapper.Map<UserInfoDTO>(await UserManager.FindByEmailAsync(nickname));
+            }
+            catch
+            {
+                return new UserInfoDTO();
+            }
+        }
+
         public async Task<IEnumerable<UserPreviewDTO>> GetUserPreviewsAsync(int pageSize, string filter, int pageIndex = 0)
         {
             IEnumerable<AspNetUser> users;

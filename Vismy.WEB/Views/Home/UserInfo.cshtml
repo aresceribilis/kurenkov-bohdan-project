@@ -1,0 +1,23 @@
+﻿@model Vismy.WEB.Models.UserInfoVM
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>User</title>
+</head>
+<body>
+    <main>
+        <div class="banner">
+            <img src="~/img/@Model.User.IconPath" class="rounded-circle" alt="" />
+            <h1>Name: @Model.User.Name</h1>
+            <h1>Surname: @Model.User.Surname</h1>
+            <h1>Nickname: @Model.User.Nickname</h1>
+            <h1>Email: @Model.User.Email</h1>
+            <h1>Birth Date: @Model.User.BirthDate</h1>
+            <h2><a asp-controller="" asp-action="">Posts</a></h2>
+        </div>
+    </main>
+</body>
+</html>

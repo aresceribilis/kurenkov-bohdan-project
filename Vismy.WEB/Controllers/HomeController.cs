@@ -22,7 +22,45 @@ namespace Vismy.WEB.Controllers
             _logger = logger;
             _userService = userService;
         }
-        
+
+        public async Task<IActionResult> PostInfo(string postId = null)
+        {
+            PostInfoDTO postInfo;
+
+            if (postId == null)
+            {
+                postInfo = (await _userService.GetPostInfoAsync(postId));
+            }
+            else
+            {
+                postInfo = await _userService.GetPostInfoAsync(postId);
+            }
+
+            if (postInfo == null)
+            {
+                Response.StatusCode = 404;
+                return View("PostNotFound", postId);
+            }
+
+            var model = new PostInfoVM() { Post = postInfo };
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> PostPreviews(int pageNum = 1, string filter = null)
+        {
+            const int pageSize = 2;
+
+            ViewData["Filter"] = filter;
+
+            var postPreviews = await _userService.GetPostPreviewsAsync(pageSize, filter, pageNum - 1);
+            var pageVm = new PageViewModel(await _userService.GetPostsCountAsync(filter), pageNum, pageSize);
+
+            var model = new PostPreviewsVM() { PageViewModel = pageVm, Posts = postPreviews };
+
+            return View(model);
+        }
+
         public async Task<IActionResult> UserInfo(string nickname = null)
         {
             UserInfoDTO userInfo;

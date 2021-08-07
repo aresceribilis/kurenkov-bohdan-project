@@ -6,7 +6,8 @@ namespace Vismy.Application.DTOs
     public class PostPreviewDTO
     {
         public string Id { get; set; }
-        public int Viewed { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
+        public int UserPostsCount { get; set; }
     }
 }

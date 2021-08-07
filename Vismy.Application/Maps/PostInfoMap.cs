@@ -23,11 +23,11 @@ namespace Vismy.Application.Maps
                 .ForMember(@do => @do.Description,
                     opt => opt.MapFrom(dto => dto.Description))
                 //.ForMember(@do => @do.StatusName,
-                //    opt => opt.MapFrom(dto => dto.PostStatus.Name))
-                //.ForMember(@do => @do.StatusDescription,
-                //    opt => opt.MapFrom(dto => dto.PostStatus.Description))
-                //.ForMember(@do => @do.AuthorNickname,
-                //    opt => opt.MapFrom(dto => dto.User.UserName))
+                    //opt => opt.MapFrom(dto => dto.PostStatus.Name))
+                .ForMember(@do => @do.AuthorId,
+                    opt => opt.MapFrom(dto => dto.UserId))
+                .ForMember(@do => @do.AuthorNickname,
+                    opt => opt.MapFrom(dto => dto.User.UserName))
                 .ForMember(@do => @do.Tags,
                     opt => opt.MapFrom(dto => dto.PostTags
                         .Select(pt => pt.Tag.Name)));

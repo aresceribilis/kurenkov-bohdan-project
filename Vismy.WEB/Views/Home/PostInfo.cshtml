@@ -1,0 +1,26 @@
+﻿@model Vismy.WEB.Models.PostInfoVM
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.Post.Title</title>
+</head>
+<body>
+<main>
+    <div class="banner">
+        <h1>Title: @Model.Post.Title</h1>
+        <h1>Description: @Model.Post.Description</h1>
+        <h1>Viewed: @Model.Post.Viewed</h1>
+        <h1>Liked: @Model.Post.Liked</h1>
+        <h1>Shared: @Model.Post.Shared</h1>
+        @foreach(var tag in Model.Post.Tags)
+        {
+            <a asp-controller="Home" asp-action="PostPreviews" asp-route-filter="@tag">#@tag </a>
+        }<br/>
+        <h2><a asp-controller="Home" asp-action="UserInfo" asp-route-nickname="@Model.Post.AuthorNickname">Author</a></h2>
+    </div>
+</main>
+</body>
+</html>

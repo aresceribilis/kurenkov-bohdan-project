@@ -4,8 +4,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Vismy.Application.DTOs;
 using Vismy.Application.Interfaces;
 using Vismy.Core.Interfaces;
@@ -73,6 +75,97 @@ namespace Vismy.Application.Services
             RoleManager = roleManager;
         }
 
+        public async Task<PostInfoDTO> GetPostInfoAsync(string postId)
+        {
+            var post = (await PostRepository.GetAsync(
+                p => p.Id == postId,
+                pq => pq
+                    .Include(p => p.UserPosts)
+                    .Include(p => p.PostTags)
+                        .ThenInclude(p => p.Tag)
+                    .Include(p => p.PostStatus)
+                    .Include(p => p.User)
+                )).FirstOrDefault();
+
+            return post == null
+                ? null
+                : new PostInfoDTO()
+                {
+                    Id = post.Id,
+                    Title = post.Title,
+                    Description = post.Description,
+                    Shared = post.Shared,
+                    Viewed = post.UserPosts.Count,
+                    Liked = post.UserPosts.Count(p => p.UserPostStatus.Name == "Liked"),
+                    Tags = post.PostTags.Select(pt => pt.Tag.Name).ToHashSet(),
+                    AuthorId = post.UserId,
+                    AuthorNickname = post.User.UserName,
+                    Status = post.PostStatus.Name
+                };
+
+            // Automapper error -.-
+            //return Mapper.Map<PostInfoDTO>((await PostRepository.GetAsync(p => p.Id == postId, "UserPosts")).FirstOrDefault());
+        }
+
+        public async Task<IEnumerable<PostPreviewDTO>> GetPostPreviewsAsync(int pageSize, string filter, int pageIndex = 0)
+        {
+            IEnumerable<Post> posts;
+
+            if (filter != null)
+            {
+                posts = await PostRepository
+                    .GetAsync(p =>
+                            (p.Title.Contains(filter)) ||
+                            p.PostTags.Any(pt => pt.Tag.Name.Contains(filter)),
+                        pq => pq
+                            .Include(p => p.UserPosts)
+                            .Include(p => p.PostTags)
+                                .ThenInclude(p => p.Tag)
+                            .Include(p => p.PostStatus)
+                            .Include(p => p.User),
+                        null,
+                        pageIndex * pageSize,
+                        pageSize);
+            }
+            else
+            {
+                posts = await PostRepository
+                    .GetAsync(
+                        null,
+                        pq => pq
+                            .Include(p => p.UserPosts)
+                            .Include(p => p.PostTags)
+                                .ThenInclude(p => p.Tag)
+                            .Include(p => p.PostStatus)
+                            .Include(p => p.User),
+                        null,
+                        pageIndex * pageSize,
+                        pageSize);
+            }
+
+            return posts.Select(post => new PostPreviewDTO()
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Description = post.Description,
+                UserPostsCount = post.UserPosts.Count
+            });
+
+            // Automapper error .-.
+            //return posts.Select(post => Mapper.Map<PostPreviewDTO>(post));
+        }
+
+        public async Task<int> GetPostsCountAsync(string filter = null)
+        {
+            if (filter == null)
+                return await PostRepository.GetCountAsync();
+
+            return await PostRepository.GetCountAsync(p =>
+                p.Title.Contains(filter) ||
+                p.PostTags.Any(pt => pt.Tag.Name.Contains(filter)))
+                ;
+        }
+
         public async Task<UserInfoDTO> GetUserInfoAsync(ClaimsPrincipal userClaim) => Mapper.Map<UserInfoDTO>(await UserManager.GetUserAsync(userClaim));
 
         public async Task<UserInfoDTO> GetUserInfoAsync(string nickname)
@@ -98,7 +191,7 @@ namespace Vismy.Application.Services
                     (i.Name.Contains(filter)) ||
                     (i.Surname.Contains(filter)) ||
                     (i.UserName.Contains(filter)), 
-                    "", 
+                    null, 
                     null, 
                     pageIndex * pageSize, 
                     pageSize);
@@ -108,7 +201,7 @@ namespace Vismy.Application.Services
                 users = await UserRepository
                     .GetAsync(
                         null, 
-                        "", 
+                        null, 
                         null, 
                         pageIndex * pageSize, 
                         pageSize);
@@ -251,12 +344,14 @@ namespace Vismy.Application.Services
                 var user = (await UserRepository
                     .GetAsync(u =>
                         u.Id == userId,
-                        "UserUserUsers"))
+                        uq => uq.
+                            Include(u => u.UserUserUsers)))
                     .FirstOrDefault();
                 var following = (await UserRepository
                     .GetAsync(u =>
                         u.Id == userId,
-                        "UserUserFollowers"))
+                        uq => uq.
+                            Include(u => u.UserUserFollowers)))
                     .FirstOrDefault();
 
                 userUser = new UserUser()
@@ -290,11 +385,13 @@ namespace Vismy.Application.Services
                 var user = (await UserRepository
                     .GetAsync(u =>
                         u.Id == userId,
-                        "UserPosts"))
+                        uq => uq.
+                            Include(u => u.UserPosts)))
                     .FirstOrDefault();
                 var post = (await PostRepository.GetAsync(p =>
                         p.Id == postId,
-                        "UserPosts"))
+                        uq => uq.
+                            Include(u => u.UserPosts)))
                     .FirstOrDefault();
                 var userPostStatus =
                     (await UserPostStatusRepository
@@ -323,7 +420,8 @@ namespace Vismy.Application.Services
                 (await UserPostRepository.GetAsync(uu =>
                     (uu.UserId == userId) &&
                     (uu.PostId == postId),
-                    "UserPostStatus"))
+                        upq => upq.
+                            Include(up => up.UserPostStatus)))
                 .FirstOrDefault();
 
             if (userPost.UserPostStatus.Name == "Liked")
@@ -346,7 +444,8 @@ namespace Vismy.Application.Services
                     .GetAsync(r =>
                         (r.PostId == reportDto.Post.Id) &&
                         (r.ReportStatus.Name == reportDto.TypeName),
-                        "UserReportAuthors"))
+                        rq => rq.
+                            Include(r => r.UserReportAuthors)))
                 .FirstOrDefault();
             var author = (await UserRepository.GetAsync(u => u.Id == authorId)).FirstOrDefault();
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Vismy.Core.Interfaces;
 using Vismy.Core.Models.Interfaces;
 using Vismy.Infrastructure.Context;
@@ -52,7 +53,13 @@ namespace Vismy.Infrastructure.Repositories
         //    return (await GetAsync(i => i.Id == id, includeProperties)).FirstOrDefault();
         //}
 
-        public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter = null, string includeProperties = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, int skip = 0, int take = 0)
+        public async Task<IEnumerable<T>> GetAsync(
+            Expression<Func<T, bool>> filter = null,
+            //List<Expression<Func<T, object>>> includes = null, 
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, 
+            int skip = 0, 
+            int take = 0)
         {
             IQueryable<T> query = _dbSet;
 
@@ -61,14 +68,17 @@ namespace Vismy.Infrastructure.Repositories
                 query = query.Where(filter);
             }
 
-            if (includeProperties != null)
+            if (include != null)
             {
-                var split = includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries);
-                foreach (var property in split)
-                {
-                    query = query.Include(property);
-                }
+                query = include(query);
             }
+
+            //if (includes != null){
+            //    foreach (var include in includes)
+            //    {
+            //        query = query.Include(include);
+            //    }
+            //}
 
             if (orderBy != null)
             {

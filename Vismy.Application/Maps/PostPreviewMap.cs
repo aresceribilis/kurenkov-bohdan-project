@@ -11,12 +11,12 @@ namespace Vismy.Application.Maps
             CreateMap<Post, PostPreviewDTO>()
                 .ForMember(@do => @do.Id,
                     opt => opt.MapFrom(dto => dto.Id))
-                .ForMember(@do => @do.Viewed,
-                    opt => opt.MapFrom(dto => dto.UserPosts
-                        .Count))
+                .ForMember(@do => @do.Title,
+                    opt => opt.MapFrom(dto => dto.Title))
                 .ForMember(@do => @do.Description,
                     opt => opt.MapFrom(dto => dto.Description))
-                .ReverseMap();
+                .ForMember(@do => @do.UserPostsCount,
+                    opt => opt.MapFrom(dto => dto.UserPosts.Count));
         }
     }
 }

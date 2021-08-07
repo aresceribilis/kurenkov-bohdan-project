@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Vismy.Core.Interfaces
 {
@@ -15,7 +16,8 @@ namespace Vismy.Core.Interfaces
         //public Task<T> GetByIdAsync(int id, string includeProperties);
         public Task<IEnumerable<T>> GetAsync(
             Expression<Func<T, bool>> filter = null, 
-            string includeProperties = null, 
+            //List<Expression<Func<T, object>>> includes = null, 
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, 
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, 
             int skip = 0, 
             int take = 0);

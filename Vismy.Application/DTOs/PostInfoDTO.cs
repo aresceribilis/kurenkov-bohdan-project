@@ -12,7 +12,9 @@ namespace Vismy.Application.DTOs
         public string Description { get; set; }
         public int Viewed { get; set; }
         public int Liked { get; set; }
-        
+        public string AuthorNickname { get; set; }
+        public string Status { get; set; }
+
         public string AuthorId { get; set; }
         public ICollection<string> Tags { get; set; }
     }

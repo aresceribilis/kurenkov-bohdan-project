@@ -1,0 +1,57 @@
+﻿@model Vismy.WEB.Models.PostPreviewsVM
+@{
+    var hasPreviousPage = Model.PageViewModel.HasPreviousPage ? "" : "disabled";
+    var hasNextPage = Model.PageViewModel.HasNextPage ? "" : "disabled";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Users</title>
+</head>
+<body>
+<main>
+    <h2>Users</h2>
+    <form asp-action="PostPreviews" method="get">
+        <div class="form-actions">
+            <p>
+                Find: <input type="text" name="filter" value="@ViewData["Filter"]" />
+                <input type="submit" value="Search" class="btn" />
+                <a asp-action="PostPreviews">Back to full list</a>
+            </p>
+        </div>
+    </form>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Viewed</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var p in Model.Posts)
+        {
+            <tr>
+                <td><a asp-action="PostInfo" asp-route-postId="@p.Id">@p.Title</a></td>
+                <td>@p.Description</td>
+                <td>@p.UserPostsCount</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <a asp-action="PostPreviews"
+       asp-route-filter="@ViewData["Filter"]"
+       asp-route-pageNum="@(Model.PageViewModel.PageNumber - 1)"
+       class="btn btn-outline-dark @hasPreviousPage">Previous</a>
+
+    <a asp-action="PostPreviews"
+       asp-route-filter="@ViewData["Filter"]"
+       asp-route-pageNum="@(Model.PageViewModel.PageNumber + 1)"
+       class="btn btn-outline-dark @hasNextPage">Next</a>
+</main>
+</body>
+</html>

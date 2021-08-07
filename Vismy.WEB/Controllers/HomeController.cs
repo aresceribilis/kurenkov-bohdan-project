@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Vismy.Application.DTOs;
 using Vismy.Application.Interfaces;
 using Vismy.WEB.Models;

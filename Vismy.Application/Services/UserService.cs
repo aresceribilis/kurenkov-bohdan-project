@@ -75,6 +75,7 @@ namespace Vismy.Application.Services
             RoleManager = roleManager;
         }
 
+        public async Task<string> GetUserIdAsync(string nickname) => (await UserManager.FindByNameAsync(nickname)).Id;
         public async Task<int> GetUserPostsCountAsync(string nickname)
         {
             var userId = (await UserManager.FindByNameAsync(nickname)).Id;
@@ -455,6 +456,16 @@ namespace Vismy.Application.Services
 
         public async Task DeletePostAsync(string postId) => await PostRepository.DeleteAsync(new Post() { Id = postId });
 
+        public async Task<bool> IsFollowedAsync(string userId, string followingId)
+        {
+            return
+                null != 
+                (await UserUserRepository.GetAsync(uu =>
+                    (uu.UserId == userId) &&
+                    (uu.FollowerId == followingId)))
+                .FirstOrDefault();
+        }
+
         public async Task FollowUserAsync(string userId, string followingId)
         {
             var userUser =
@@ -467,34 +478,13 @@ namespace Vismy.Application.Services
                 await UserUserRepository.DeleteAsync(userUser);
             else
             {
-                var user = (await UserRepository
-                    .GetAsync(u =>
-                        u.Id == userId,
-                        uq => uq.
-                            Include(u => u.UserUserUsers)))
-                    .FirstOrDefault();
-                var following = (await UserRepository
-                    .GetAsync(u =>
-                        u.Id == userId,
-                        uq => uq.
-                            Include(u => u.UserUserFollowers)))
-                    .FirstOrDefault();
-
                 userUser = new UserUser()
                 {
-                    User = user,
-                    Follower = following,
-                    UserId = user.Id,
+                    UserId = userId,
                     FollowerId = followingId
                 };
 
                 await UserUserRepository.AddAsync(userUser);
-
-                user.UserUserUsers.Add(userUser);
-                following.UserUserFollowers.Add(userUser);
-
-                await UserRepository.UpdateAsync(user);
-                await UserRepository.UpdateAsync(following);
             }
         }
 

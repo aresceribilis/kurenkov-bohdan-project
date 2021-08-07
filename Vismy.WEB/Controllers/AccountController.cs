@@ -25,6 +25,20 @@ namespace Vismy.WEB.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
+        public async Task<IActionResult> FollowUser(string followingId = null, string followingNickname = null)
+        {
+            var userId = await _userService.GetUserIdAsync(this.User);
+
+            if ((followingId == null) ||
+                (followingNickname == null))
+                return RedirectToAction("Index", "Home");
+
+            await _userService.FollowUserAsync(userId, followingId);
+
+            return RedirectToAction("UserInfo", "Home", new { nickname = followingNickname });
+        }
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> EditPost(string postId)

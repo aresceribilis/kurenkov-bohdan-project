@@ -23,6 +23,7 @@ namespace Vismy.Application.Interfaces
         public Task<UserInfoDTO> GetUserInfoAsync(string nickname);
         public Task<IEnumerable<UserPreviewDTO>> GetUserPreviewsAsync(int pageSize, string filter, int pageIndex = 0);
         public Task<int> GetUsersCountAsync(string filter = null);
+        public Task<string> GetUserIdAsync(string nickname);
         public Task<string> GetUserIdAsync(ClaimsPrincipal userClaim);
         public Task<IdentityResult> AddUserAsync(UserInfoDTO userDto, bool rememberMe);
         public Task ChangeRole(string email, string oldRole, string newRole);
@@ -31,6 +32,7 @@ namespace Vismy.Application.Interfaces
         public Task<bool> AddPostAsync(PostInfoDTO postDto);
         public Task EditPostAsync(PostInfoDTO postDto);
         public Task DeletePostAsync(string postId);
+        public Task<bool> IsFollowedAsync(string userId, string followingId);
         public Task FollowUserAsync(string userId, string followingId);
         public Task ViewPostAsync(string userId, string postId);
         public Task LikePostAsync(string userId, string postId);

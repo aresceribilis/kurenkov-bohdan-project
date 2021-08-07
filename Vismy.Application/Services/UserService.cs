@@ -75,6 +75,35 @@ namespace Vismy.Application.Services
             RoleManager = roleManager;
         }
 
+        public async Task<bool> UpdateProfileAsync(UserInfoDTO userDto)
+        {
+            var user = await UserManager.FindByEmailAsync(userDto.Email);
+            if ((user != null) && (user.Id != userDto.Id))
+                return false;
+
+            var userByNickname = await UserManager.FindByNameAsync(userDto.Nickname);
+            if ((userByNickname != null) && (userByNickname.Id != userDto.Id))
+                return false;
+
+            user ??= await UserManager.FindByIdAsync(userDto.Id);
+
+            user.Id = userDto.Id;
+            user.Name = userDto.Name;
+            user.Surname = userDto.Surname;
+            user.BirthDate = userDto.BirthDate;
+            user.IconPath = userDto.IconPath;
+            user.Email = userDto.Email;
+            user.UserName = userDto.Nickname;
+            user.PhoneNumber = userDto.PhoneNumber;
+
+            await UserManager.UpdateAsync(user);
+            //await UserManager.ChangePasswordAsync(user, userDto.Password, userDto.Password);
+
+            await SignInManager.RefreshSignInAsync(user);
+
+            return true;
+        }
+
         public async Task<PostInfoDTO> GetPostInfoAsync(string postId)
         {
             var post = (await PostRepository.GetAsync(
@@ -172,7 +201,7 @@ namespace Vismy.Application.Services
         {
             try
             {
-                return Mapper.Map<UserInfoDTO>(await UserManager.FindByEmailAsync(nickname));
+                return Mapper.Map<UserInfoDTO>(await UserManager.FindByNameAsync(nickname));
             }
             catch
             {
@@ -248,9 +277,9 @@ namespace Vismy.Application.Services
             return result;
         }
 
-        public async Task ChangeRole(string email, string oldRole, string newRole)
+        public async Task ChangeRole(string nickname, string oldRole, string newRole)
         {
-            var user = await UserManager.FindByEmailAsync(email);
+            var user = await UserManager.FindByNameAsync(nickname);
 
             if (await RoleManager.RoleExistsAsync(oldRole))
                 if (await UserManager.IsInRoleAsync(user, oldRole))
@@ -267,7 +296,10 @@ namespace Vismy.Application.Services
 
         public async Task<SignInResult> Login(UserInfoDTO userDto)
         {
-            var user = await UserManager.FindByNameAsync(userDto.Email);
+            var user = await UserManager.FindByNameAsync(userDto.Nickname) ?? await UserManager.FindByEmailAsync(userDto.Email);
+
+            if (user == null)
+                return SignInResult.Failed;
 
             return await SignInManager.PasswordSignInAsync(user, userDto.Password, userDto.RememberMe, false);
         }

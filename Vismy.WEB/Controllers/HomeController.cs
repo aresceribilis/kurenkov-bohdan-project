@@ -80,7 +80,19 @@ namespace Vismy.WEB.Controllers
                 return View("UserNotFound", nickname);
             }
 
-            var model = new UserInfoVM() { User = userInfo };
+            var model = new UserInfoVM()
+            {
+                Id = userInfo.Id,
+                Name = userInfo.Name,
+                Surname = userInfo.Surname,
+                BirthDate = userInfo.BirthDate,
+                IconPath = userInfo.IconPath,
+                Email = userInfo.Email,
+                Nickname = userInfo.Nickname,
+                Password = userInfo.Password,
+                PhoneNumber = userInfo.PhoneNumber,
+                RoleName = userInfo.RoleName
+            };
 
             return View(model);
         }

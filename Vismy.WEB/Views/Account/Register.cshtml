@@ -22,7 +22,9 @@
         <form method="post" asp-controller="Account" asp-action="Register">
             <div asp-validation-summary="ModelOnly"></div>
             <h1 class="h3 mb-3 fw-normal">Registration</h1>
-            
+            <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Nickname" asp-for="Nickname">
+            </div>
             <div class="form-floating">
                 <input type="email" class="form-control" id="floatingInput" placeholder="Email" asp-for="Email">
             </div>

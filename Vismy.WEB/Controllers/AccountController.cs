@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Vismy.Application.DTOs;
 using Vismy.Application.Interfaces;
 using Vismy.WEB.Models;
@@ -25,6 +26,40 @@ namespace Vismy.WEB.Controllers
 
         [HttpGet]
         [Authorize]
+        public IActionResult EditProfile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> EditProfile(UserInfoVM model)
+        {
+            var userDto = new UserInfoDTO()
+            {
+                Id = await _userService.GetUserIdAsync(this.User),
+                Name = model.Name,
+                Surname = model.Surname,
+                IconPath = model.IconPath,
+                BirthDate = model.BirthDate,
+                Email = model.Email,
+                Nickname = model.Nickname,
+                Password = model.Password,
+                PhoneNumber = model.PhoneNumber
+            };
+
+            var isSuccess = await _userService.UpdateProfileAsync(userDto);
+
+            if (isSuccess)
+                return RedirectToAction("UserInfo", "Home", model.Email);
+
+            ModelState.AddModelError("", "Error with user updating.");
+
+            return View(model);
+        }
+
+        [HttpGet]
+        [Authorize]
         public IActionResult PostCreate()
         {
             return View();
@@ -34,18 +69,6 @@ namespace Vismy.WEB.Controllers
         [Authorize]
         public async Task<IActionResult> PostCreate(PostCreateVM model)
         {
-            if (model.Title == "")
-            {
-                ModelState.AddModelError("", "Title have to be indicated.");
-            }
-
-            if (model.Description == "")
-            {
-                ModelState.AddModelError("", "Description have to be indicated.");
-            }
-
-            if (!ModelState.IsValid) return View(model);
-
             var postDto = new PostInfoDTO()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -59,7 +82,7 @@ namespace Vismy.WEB.Controllers
 
             if (isSuccess)
                 return RedirectToAction("Index", "Home");
-            
+
             ModelState.AddModelError("", "Error with post adding.");
 
             return View(model);
@@ -74,18 +97,6 @@ namespace Vismy.WEB.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM model)
         {
-            if (model.Password != model.PasswordConfirm)
-            {
-                ModelState.AddModelError("", "Passwords have to be equals.");
-            }
-
-            if (!new EmailAddressAttribute().IsValid(model.Email))
-            {
-                ModelState.AddModelError("", "Incorrect email!");
-            }
-
-            if (!ModelState.IsValid) return View(model);
-            
             var userDto = new UserInfoDTO ()
             {
                 Id = Guid.NewGuid().ToString(), 
@@ -127,7 +138,7 @@ namespace Vismy.WEB.Controllers
 
             if (!ModelState.IsValid) return View(model);
 
-            var userDto = new UserInfoDTO() {Email = model.Email, Password = model.Password, RememberMe = model.RememberMe};
+            var userDto = new UserInfoDTO() {Email = model.Email, Nickname = model.Email, Password = model.Password, RememberMe = model.RememberMe};
 
             var result = await _userService.Login(userDto);
                 

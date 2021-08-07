@@ -1,4 +1,7 @@
-﻿@model Vismy.WEB.Models.UserInfoVM
+﻿@using Microsoft.AspNetCore.Identity
+@using Vismy.Core.Models.Implementations
+@model Vismy.WEB.Models.UserInfoVM
+@inject UserManager<AspNetUser> UserManager
 
 <!DOCTYPE html>
 
@@ -10,12 +13,16 @@
 <body>
     <main>
         <div class="banner">
-            <img src="~/img/@Model.User.IconPath" class="rounded-circle" alt="" />
-            <h1>Name: @Model.User.Name</h1>
-            <h1>Surname: @Model.User.Surname</h1>
-            <h1>Nickname: @Model.User.Nickname</h1>
-            <h1>Email: @Model.User.Email</h1>
-            <h1>Birth Date: @Model.User.BirthDate</h1>
+            <img src="~/img/@Model.IconPath" class="rounded-circle" alt="" />
+            <h1>Name: @Model.Name</h1>
+            <h1>Surname: @Model.Surname</h1>
+            <h1>Nickname: @Model.Nickname</h1>
+            <h1>Email: @Model.Email</h1>
+            <h1>Birth Date: @Model.BirthDate</h1>
+            @if (@Model.Id == UserManager.GetUserId(this.User))
+            {
+                <h2><a asp-controller="Account" asp-action="EditProfile">Edit profile</a></h2>
+            }
             <h2><a asp-controller="" asp-action="">Posts</a></h2>
         </div>
     </main>

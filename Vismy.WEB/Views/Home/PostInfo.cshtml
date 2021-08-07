@@ -1,4 +1,7 @@
-﻿@model Vismy.WEB.Models.PostInfoVM
+﻿@using Microsoft.AspNetCore.Identity
+@using Vismy.Core.Models.Implementations
+@model Vismy.WEB.Models.PostInfoVM
+@inject UserManager<AspNetUser> UserManager
 
 <!DOCTYPE html>
 
@@ -21,6 +24,10 @@
         }
         <br/>
         <h2><a asp-controller="Home" asp-action="UserInfo" asp-route-nickname="@Model.Post.AuthorNickname">Author</a></h2>
+        @if (@Model.Post.AuthorId == UserManager.GetUserId(this.User))
+        {
+            <h2><a asp-controller="Account" asp-action="EditPost" asp-route-postId="@Model.Post.Id">Edit post</a></h2>
+        }
     </div>
 </main>
 </body>

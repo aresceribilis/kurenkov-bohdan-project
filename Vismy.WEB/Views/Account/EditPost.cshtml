@@ -1,0 +1,30 @@
+﻿@model Vismy.WEB.Models.PostCreateVM
+
+<h4>Post editing</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditPost">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Description</label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tags" class="control-label">Tags</label>
+                <input asp-for="Tags" class="form-control" />
+                <span asp-validation-for="Tags" class="text-danger"></span>
+            </div>
+            <input asp-for="Id" type="hidden" name="Id" value="@Model.Id" />
+            <div class="form-group">
+                <input type="submit" value="Edit post" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

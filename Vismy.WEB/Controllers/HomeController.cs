@@ -25,17 +25,11 @@ namespace Vismy.WEB.Controllers
 
         public async Task<IActionResult> PostInfo(string postId = null)
         {
-            PostInfoDTO postInfo;
-
             if (postId == null)
-            {
-                postInfo = (await _userService.GetPostInfoAsync(postId));
-            }
-            else
-            {
-                postInfo = await _userService.GetPostInfoAsync(postId);
-            }
+                return RedirectToAction("Index", "Home");
 
+            var postInfo = await _userService.GetPostInfoAsync(postId);
+            
             if (postInfo == null)
             {
                 Response.StatusCode = 404;
@@ -63,17 +57,11 @@ namespace Vismy.WEB.Controllers
 
         public async Task<IActionResult> UserInfo(string nickname = null)
         {
-            UserInfoDTO userInfo;
-
             if (nickname == null)
-            {
-                userInfo = (await _userService.GetUserInfoAsync(this.User));
-            }
-            else
-            {
-                userInfo = await _userService.GetUserInfoAsync(nickname);
-            }
+                return RedirectToAction("Index", "Home");
 
+            var userInfo = await _userService.GetUserInfoAsync(nickname);
+            
             if (userInfo == null)
             {
                 Response.StatusCode = 404;

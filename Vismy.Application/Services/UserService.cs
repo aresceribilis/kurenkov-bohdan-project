@@ -75,6 +75,64 @@ namespace Vismy.Application.Services
             RoleManager = roleManager;
         }
 
+        public async Task<bool> IsUserOwnPostAsync(string nickname, string postId)
+        {
+            var authorId = (await UserManager.FindByNameAsync(nickname)).Id;
+
+            var post =
+                (await PostRepository.GetAsync(p =>
+                    (p.UserId == authorId) &&
+                    (p.Id == postId)))
+                .FirstOrDefault();
+
+            return post != null;
+        }
+
+        public async Task<bool> UpdatePostAsync(PostInfoDTO postDto)
+        {
+            try
+            {
+                var post = (await PostRepository.GetAsync(p => p.Id == postDto.Id)).FirstOrDefault();
+
+                post.Title = postDto.Title;
+                post.Description = postDto.Description;
+
+                await PostRepository.UpdateAsync(post);
+
+                var tagsFromPostToDelete = await PostTagRepository.GetAsync(pt => pt.PostId == post.Id);
+                foreach (var postTag in tagsFromPostToDelete)
+                {
+                    await PostTagRepository.DeleteAsync(postTag);
+                }
+
+                var tagSs = postDto.Tags;
+                foreach (var tagS in tagSs)
+                {
+                    var tag = (await TagRepository.GetAsync(t => t.Name == tagS)).FirstOrDefault();
+                    if (tag == null)
+                    {
+                        tag = new Tag() { Id = Guid.NewGuid().ToString(), Name = tagS };
+
+                        await TagRepository.AddAsync(tag);
+                    }
+
+                    var postTag = new PostTag()
+                    {
+                        PostId = post.Id,
+                        TagId = tag.Id
+                    };
+
+                    await PostTagRepository.AddAsync(postTag);
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public async Task<bool> UpdateProfileAsync(UserInfoDTO userDto)
         {
             var user = await UserManager.FindByEmailAsync(userDto.Email);

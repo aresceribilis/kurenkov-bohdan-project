@@ -30,6 +30,11 @@ namespace Vismy.WEB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureApplicationCookie(p =>
+            {
+                p.LoginPath = "/Account/Login";
+            });
+
             services.AddControllersWithViews();
             services.AddAutoMapper(Assembly.Load("Vismy.WEB"), Assembly.Load("Vismy.Infrastructure"));
 

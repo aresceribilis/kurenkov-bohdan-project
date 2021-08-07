@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -26,9 +27,65 @@ namespace Vismy.WEB.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult EditProfile()
+        public async Task<IActionResult> EditPost(string postId)
         {
-            return View();
+            var isSuccess = await _userService.IsUserOwnPostAsync(this.User.Identity.Name, postId);
+
+            if (!isSuccess)
+                return RedirectToAction("Index", "Home");
+
+            var post = await _userService.GetPostInfoAsync(postId);
+
+            var model = new PostCreateVM()
+            {
+                Id = post.Id, 
+                Title = post.Title, 
+                Description = post.Description, 
+                Tags = string.Join(' ', post.Tags)
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> EditPost(PostCreateVM model)
+        {
+            var postDto = new PostInfoDTO()
+            {
+                Id = model.Id,
+                AuthorId = (await _userService.GetUserIdAsync(this.User)),
+                Title = model.Title,
+                Description = model.Description,
+                Tags = model.Tags.Split()
+            };
+
+            var isSuccess = await _userService.UpdatePostAsync(postDto);
+
+            if (isSuccess)
+                return RedirectToAction("PostInfo", "Home", new {postId = model.Id});
+
+            ModelState.AddModelError("", "Error with post updating.");
+
+            return View(model);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> EditProfile()
+        {
+            var user = await _userService.GetUserInfoAsync(this.User.Identity.Name);
+
+            var model = new UserInfoVM()
+            {
+                Name = user.Name,
+                Surname = user.Surname,
+                Email = user.Email,
+                Nickname = user.Nickname,
+                PhoneNumber = user.PhoneNumber
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -51,7 +108,7 @@ namespace Vismy.WEB.Controllers
             var isSuccess = await _userService.UpdateProfileAsync(userDto);
 
             if (isSuccess)
-                return RedirectToAction("UserInfo", "Home", model.Email);
+                return RedirectToAction("UserInfo", "Home", new { nickname = this.User.Identity.Name});
 
             ModelState.AddModelError("", "Error with user updating.");
 

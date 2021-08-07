@@ -11,6 +11,8 @@ namespace Vismy.Application.Interfaces
 {
     public interface IUserService
     {
+        public Task<int> GetUserPostsCountAsync(string nickname);
+        public Task<IEnumerable<PostPreviewDTO>> GetUserPostsAsync(string nickname, int pageSize, int pageIndex = 0);
         public Task<bool> IsUserOwnPostAsync(string nickname, string postId);
         public Task<bool> UpdatePostAsync(PostInfoDTO postDto);
         public Task<bool> UpdateProfileAsync(UserInfoDTO userDto);

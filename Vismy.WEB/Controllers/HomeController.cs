@@ -23,6 +23,24 @@ namespace Vismy.WEB.Controllers
             _userService = userService;
         }
 
+        public async Task<IActionResult> UserPosts(int pageNum = 1, string nickname = null)
+        {
+            if ((null == await _userService.GetUserInfoAsync(nickname)) || 
+                (null == nickname))
+                return RedirectToAction("Index", "Home");
+
+            ViewData["AuthorNickname"] = nickname;
+
+            const int pageSize = 2;
+
+            var postPreviews = await _userService.GetUserPostsAsync(nickname, pageSize, pageNum - 1);
+            var pageVm = new PageViewModel(await _userService.GetUserPostsCountAsync(nickname), pageNum, pageSize);
+
+            var model = new PostPreviewsVM() { PageViewModel = pageVm, Posts = postPreviews };
+
+            return View(model);
+        }
+
         public async Task<IActionResult> PostInfo(string postId = null)
         {
             if (postId == null)

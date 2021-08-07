@@ -23,7 +23,7 @@
             {
                 <h2><a asp-controller="Account" asp-action="EditProfile">Edit profile</a></h2>
             }
-            <h2><a asp-controller="" asp-action="">Posts</a></h2>
+            <h2><a asp-controller="Home" asp-action="UserPosts" asp-route-nickname="@Model.Nickname">Posts</a></h2>
         </div>
     </main>
 </body>

@@ -75,6 +75,42 @@ namespace Vismy.Application.Services
             RoleManager = roleManager;
         }
 
+        public async Task<int> GetUserPostsCountAsync(string nickname)
+        {
+            var userId = (await UserManager.FindByNameAsync(nickname)).Id;
+
+            return await UserRepository.GetCountAsync(u => u.Id == userId);
+        }
+
+        public async Task<IEnumerable<PostPreviewDTO>> GetUserPostsAsync(string nickname, int pageSize, int pageIndex = 0)
+        {
+            var userId = (await UserManager.FindByNameAsync(nickname)).Id;
+
+            var posts = await PostRepository
+                .GetAsync(
+                    u => u.UserId == userId,
+                    pq => pq
+                        .Include(p => p.UserPosts)
+                        .Include(p => p.PostTags)
+                        .ThenInclude(p => p.Tag)
+                        .Include(p => p.PostStatus)
+                        .Include(p => p.User),
+                    null,
+                    pageIndex * pageSize,
+                    pageSize);
+            
+            return posts.Select(post => new PostPreviewDTO()
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Description = post.Description,
+                UserPostsCount = post.UserPosts.Count
+            });
+
+            // Automapper error .-.
+            //return posts.Select(post => Mapper.Map<PostPreviewDTO>(post));
+        }
+
         public async Task<bool> IsUserOwnPostAsync(string nickname, string postId)
         {
             var authorId = (await UserManager.FindByNameAsync(nickname)).Id;

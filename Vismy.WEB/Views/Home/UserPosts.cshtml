@@ -1,0 +1,36 @@
+﻿@model Vismy.WEB.Models.PostPreviewsVM
+@{
+    var hasPreviousPage = Model.PageViewModel.HasPreviousPage ? "" : "disabled";
+    var hasNextPage = Model.PageViewModel.HasNextPage ? "" : "disabled";
+}
+
+<h2>@ViewData["AuthorNickname"] posts</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Viewed</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.Posts)
+        {
+            <tr>
+                <td><a asp-action="PostInfo" asp-route-postId="@p.Id">@p.Title</a></td>
+                <td>@p.Description</td>
+                <td>@p.UserPostsCount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="PostPreviews"
+   asp-route-filter="@ViewData["Filter"]"
+   asp-route-pageNum="@(Model.PageViewModel.PageNumber - 1)"
+   class="btn btn-outline-dark @hasPreviousPage">Previous</a>
+
+<a asp-action="PostPreviews"
+   asp-route-filter="@ViewData["Filter"]"
+   asp-route-pageNum="@(Model.PageViewModel.PageNumber + 1)"
+   class="btn btn-outline-dark @hasNextPage">Next</a>

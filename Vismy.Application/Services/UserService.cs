@@ -456,6 +456,64 @@ namespace Vismy.Application.Services
 
         public async Task DeletePostAsync(string postId) => await PostRepository.DeleteAsync(new Post() { Id = postId });
 
+        public async Task<int> GetUserFollowersCountAsync(string nickname = null)
+        {
+            var userId = (await UserManager.FindByNameAsync(nickname)).Id;
+
+            return await UserUserRepository.GetCountAsync(uu => uu.FollowerId == userId);
+        }
+
+        public async Task<int> GetUserFollowingCountAsync(string nickname = null)
+        {
+            var userId = (await UserManager.FindByNameAsync(nickname)).Id;
+
+            return await UserUserRepository.GetCountAsync(uu => uu.UserId == userId);
+        }
+
+        public async Task<IEnumerable<UserPreviewDTO>> GetUserFollowersAsync(string nickname, int pageSize, int pageIndex = 0)
+        {
+            var userId = (await UserManager.FindByNameAsync(nickname)).Id;
+
+            var userUsers = 
+                await UserUserRepository.GetAsync(
+                    uu => uu.FollowerId == userId,
+                    uuq => uuq.Include(uu => uu.User),
+                    null,
+                    pageIndex * pageSize,
+                    pageSize);
+
+            return userUsers.Select(userUser => new UserPreviewDTO()
+            {
+                IconPath = userUser.User.IconPath,
+                Id = userUser.User.Id,
+                Name = userUser.User.Name,
+                Surname = userUser.User.Surname,
+                Nickname = userUser.User.UserName
+            });
+        }
+
+        public async Task<IEnumerable<UserPreviewDTO>> GetUserFollowingAsync(string nickname, int pageSize, int pageIndex = 0)
+        {
+            var userId = (await UserManager.FindByNameAsync(nickname)).Id;
+
+            var userFollowers =
+                await UserUserRepository.GetAsync(
+                    uu => uu.UserId == userId,
+                    uuq => uuq.Include(uu => uu.Follower),
+                    null,
+                    pageIndex * pageSize,
+                    pageSize);
+
+            return userFollowers.Select(userFollower => new UserPreviewDTO()
+            {
+                IconPath = userFollower.Follower.IconPath,
+                Id = userFollower.Follower.Id,
+                Name = userFollower.Follower.Name,
+                Surname = userFollower.Follower.Surname,
+                Nickname = userFollower.Follower.UserName
+            });
+        }
+
         public async Task<bool> IsFollowedAsync(string userId, string followingId)
         {
             return

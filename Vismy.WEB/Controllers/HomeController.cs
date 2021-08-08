@@ -24,6 +24,48 @@ namespace Vismy.WEB.Controllers
             _userService = userService;
         }
 
+        public async Task<IActionResult> UserFollowers(string nickname, int pageNum = 1)
+        {
+            if ((null == await _userService.GetUserInfoAsync(nickname)) ||
+                (null == nickname))
+            {
+                Response.StatusCode = 404;
+                return View("UserNotFound", nickname);
+            }
+
+            ViewData["AuthorNickname"] = nickname;
+
+            const int pageSize = 2;
+
+            var userPreviews = await _userService.GetUserFollowersAsync(nickname, pageSize, pageNum - 1);
+            var pageVm = new PageViewModel(await _userService.GetUserFollowersCountAsync(nickname), pageNum, pageSize);
+
+            var model = new UserPreviewsVM() { PageViewModel = pageVm, Users = userPreviews };
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> UserFollowing(string nickname, int pageNum = 1)
+        {
+            if ((null == await _userService.GetUserInfoAsync(nickname)) ||
+                (null == nickname))
+            {
+                Response.StatusCode = 404;
+                return View("UserNotFound", nickname);
+            }
+
+            ViewData["AuthorNickname"] = nickname;
+
+            const int pageSize = 2;
+
+            var userPreviews = await _userService.GetUserFollowingAsync(nickname, pageSize, pageNum - 1);
+            var pageVm = new PageViewModel(await _userService.GetUserFollowingCountAsync(nickname), pageNum, pageSize);
+
+            var model = new UserPreviewsVM() { PageViewModel = pageVm, Users = userPreviews };
+
+            return View(model);
+        }
+
         public async Task<IActionResult> UserPosts(int pageNum = 1, string nickname = null)
         {
             if ((null == await _userService.GetUserInfoAsync(nickname)) || 

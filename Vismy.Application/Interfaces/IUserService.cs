@@ -32,6 +32,10 @@ namespace Vismy.Application.Interfaces
         public Task<bool> AddPostAsync(PostInfoDTO postDto);
         public Task EditPostAsync(PostInfoDTO postDto);
         public Task DeletePostAsync(string postId);
+        public Task<int> GetUserFollowersCountAsync(string nickname = null);
+        public Task<int> GetUserFollowingCountAsync(string nickname = null);
+        public Task<IEnumerable<UserPreviewDTO>> GetUserFollowersAsync(string nickname, int pageSize, int pageIndex = 0);
+        public Task<IEnumerable<UserPreviewDTO>> GetUserFollowingAsync(string nickname, int pageSize, int pageIndex = 0);
         public Task<bool> IsFollowedAsync(string userId, string followingId);
         public Task FollowUserAsync(string userId, string followingId);
         public Task ViewPostAsync(string userId, string postId);

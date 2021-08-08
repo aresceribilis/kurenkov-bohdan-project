@@ -1,0 +1,36 @@
+﻿@model Vismy.WEB.Models.UserPreviewsVM
+@{
+    var hasPreviousPage = Model.PageViewModel.HasPreviousPage ? "" : "disabled";
+    var hasNextPage = Model.PageViewModel.HasNextPage ? "" : "disabled";
+}
+
+<h2>@ViewData["AuthorNickname"] followers</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Nickname</th>
+        <th>Name</th>
+        <th>Surname</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var u in Model.Users)
+    {
+        <tr>
+            <td><a asp-action="UserInfo" asp-route-nickname="@u.Nickname">@u.Nickname</a></td>
+            <td>@u.Name</td>
+            <td>@u.Surname</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a asp-action="PostPreviews"
+   asp-route-filter="@ViewData["Filter"]"
+   asp-route-pageNum="@(Model.PageViewModel.PageNumber - 1)"
+   class="btn btn-outline-dark @hasPreviousPage">Previous</a>
+
+<a asp-action="PostPreviews"
+   asp-route-filter="@ViewData["Filter"]"
+   asp-route-pageNum="@(Model.PageViewModel.PageNumber + 1)"
+   class="btn btn-outline-dark @hasNextPage">Next</a>

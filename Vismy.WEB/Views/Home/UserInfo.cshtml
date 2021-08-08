@@ -45,6 +45,8 @@
                        asp-route-followingNickname="@Model.Nickname" 
                     >Follow</a></h2>
             }
+            <h2><a asp-controller="Home" asp-action="UserFollowers" asp-route-nickname="@Model.Nickname">Followers</a></h2>
+            <h2><a asp-controller="Home" asp-action="UserFollowing" asp-route-nickname="@Model.Nickname">Following</a></h2>
         </div>
     </main>
 </body>

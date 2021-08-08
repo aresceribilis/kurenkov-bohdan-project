@@ -172,10 +172,14 @@ namespace Vismy.WEB.Controllers
             {
                 Id = Guid.NewGuid().ToString(), 
                 Email = model.Email, 
-                Password = model.Password, 
-                Nickname = model.Email, 
+                Password = model.Password,
+                Nickname = model.Nickname,
+                Name = model.Name,
+                Surname = model.Surname,
+                PhoneNumber = model.PhoneNumber,
+                RememberMe = model.RememberMe,
                 RoleName = "User", 
-                IconPath = "default-avatar.jpg"
+                IconPath = "default-avatar.jpg",
             };
 
             var result = await _userService.AddUserAsync(userDto, model.RememberMe);
@@ -187,7 +191,7 @@ namespace Vismy.WEB.Controllers
 
             foreach (var identityError in result.Errors)
             {
-                ModelState.AddModelError(string.Empty, identityError.Description);
+                ModelState.AddModelError("", identityError.Description);
             }
 
             return View(model);

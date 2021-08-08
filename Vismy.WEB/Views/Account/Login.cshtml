@@ -1,45 +1,31 @@
 ﻿@model Vismy.WEB.Models.LoginVM
 
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <title>Sign in</title>
-    
-    <!-- Bootstrap core CSS -->
-    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Favicons -->
-    <meta name="theme-color" content="#7952b3">
-    
-    <!-- Custom styles for this template -->
-    <link href="/css/signin.css" rel="stylesheet">
-</head>
-<body class="text-center">
-
-<main class="form-signin">
-    <form method="post" asp-controller="Account" asp-action="Login">
-        <div asp-validation-summary="ModelOnly"></div>
-        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-        <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" placeholder="Login" asp-for="Email">
-            <span asp-validation-for="Email"></span>
+<h4>Please sign in</h4>
+<hr />
+<div class="d-flex w-25">
+    <form asp-action="Login">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Email">Login</label>
+            <input asp-for="Email" type="text" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
-        <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" asp-for="Password">
-            <span asp-validation-for="Password"></span>
+        <div class="form-group">
+            <label asp-for="Password">Password</label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me" asp-for="RememberMe"> Remember me
+        <div class="checkbox form-group">
+            <label class="form-check-label">
+                <input type="checkbox" value="false" asp-for="RememberMe"> Remember me
             </label>
         </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        <div class="form-group">
+            <input type="submit" value="Sign in" class="btn btn-primary" />
+        </div>
     </form>
-</main>
+</div>
 
-</body>
-</html>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>

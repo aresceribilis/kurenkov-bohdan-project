@@ -1,53 +1,40 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Vismy.Application.Interfaces
-@using Vismy.Application.Services
 @using Vismy.Core.Models.Implementations
 @model Vismy.WEB.Models.UserInfoVM
 @inject UserManager<AspNetUser> UserManager
 @inject IUserService UserService  
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>User</title>
-</head>
-<body>
-    <main>
-        <div class="banner">
-            <img src="~/img/@Model.IconPath" class="rounded-circle" alt="" />
-            <h1>Name: @Model.Name</h1>
-            <h1>Surname: @Model.Surname</h1>
-            <h1>Nickname: @Model.Nickname</h1>
-            <h1>Email: @Model.Email</h1>
-            <h1>Birth Date: @Model.BirthDate</h1>
-            @if (@Model.Id == UserManager.GetUserId(this.User))
-            {
-                <h2><a asp-controller="Account" asp-action="EditProfile">Edit profile</a></h2>
-            }
-            <h2><a asp-controller="Home" asp-action="UserPosts" asp-route-nickname="@Model.Nickname">Posts</a></h2>
-            @if ((@Model.Id != UserManager.GetUserId(this.User)) && 
-                 (await UserService.IsFollowedAsync(UserManager.GetUserId(this.User), @Model.Id)) &&
-                 (User.Identity.IsAuthenticated))
-            {
-                <h2><a asp-controller="Account" asp-action="FollowUser" 
-                       asp-route-followingId="@Model.Id" 
-                       asp-route-followingNickname="@Model.Nickname" 
-                    >Unfollow</a></h2>
-            }
-            @if ((@Model.Id != UserManager.GetUserId(this.User)) &&
-                (!await UserService.IsFollowedAsync(UserManager.GetUserId(this.User), @Model.Id)) &&
-                 (User.Identity.IsAuthenticated))
-            {
-                <h2><a asp-controller="Account" asp-action="FollowUser" 
-                       asp-route-followingId="@Model.Id" 
-                       asp-route-followingNickname="@Model.Nickname" 
-                    >Follow</a></h2>
-            }
-            <h2><a asp-controller="Home" asp-action="UserFollowers" asp-route-nickname="@Model.Nickname">Followers</a></h2>
-            <h2><a asp-controller="Home" asp-action="UserFollowing" asp-route-nickname="@Model.Nickname">Following</a></h2>
-        </div>
-    </main>
-</body>
-</html>
+<div class="banner">
+    <img src="~/img/@Model.IconPath" class="rounded-circle" alt="" />
+    <h1>Name: @Model.Name</h1>
+    <h1>Surname: @Model.Surname</h1>
+    <h1>Nickname: @Model.Nickname</h1>
+    <h1>Email: @Model.Email</h1>
+    <h1>Birth Date: @Model.BirthDate</h1>
+    @if (@Model.Id == UserManager.GetUserId(this.User))
+    {
+        <h2><a asp-controller="Account" asp-action="EditProfile">Edit profile</a></h2>
+    }
+    <h2><a asp-controller="Home" asp-action="UserPosts" asp-route-nickname="@Model.Nickname">Posts</a></h2>
+    @if ((@Model.Id != UserManager.GetUserId(this.User)) && 
+         (await UserService.IsFollowedAsync(UserManager.GetUserId(this.User), @Model.Id)) &&
+         (User.Identity.IsAuthenticated))
+    {
+        <h2><a asp-controller="Account" asp-action="FollowUser" 
+               asp-route-followingId="@Model.Id" 
+               asp-route-followingNickname="@Model.Nickname" 
+            >Unfollow</a></h2>
+    }
+    @if ((@Model.Id != UserManager.GetUserId(this.User)) &&
+        (!await UserService.IsFollowedAsync(UserManager.GetUserId(this.User), @Model.Id)) &&
+         (User.Identity.IsAuthenticated))
+    {
+        <h2><a asp-controller="Account" asp-action="FollowUser" 
+               asp-route-followingId="@Model.Id" 
+               asp-route-followingNickname="@Model.Nickname" 
+            >Follow</a></h2>
+    }
+    <h2><a asp-controller="Home" asp-action="UserFollowers" asp-route-nickname="@Model.Nickname">Followers</a></h2>
+    <h2><a asp-controller="Home" asp-action="UserFollowing" asp-route-nickname="@Model.Nickname">Following</a></h2>
+</div>
